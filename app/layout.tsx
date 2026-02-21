@@ -24,7 +24,7 @@ export default function RootLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <html lang="bn" className="scroll-smooth">
+        <html lang="bn" className="scroll-smooth" suppressHydrationWarning>
             <head>
                 {/* Facebook Pixel Code Example */}
                 <script
@@ -53,7 +53,7 @@ export default function RootLayout({
                     />
                 </noscript>
             </head>
-            <body className={`${hindSiliguri.className} antialiased bg-gray-50 text-gray-900`}>
+            <body className={`${hindSiliguri.className} antialiased bg-gray-50 text-gray-900`} suppressHydrationWarning>
                 {children}
             </body>
         </html>

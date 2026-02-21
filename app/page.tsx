@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Image from 'next/image';
-import { CheckCircle2, Truck, Star, Phone, ShoppingCart, Award, ShieldCheck, HeartPulse, Clock, MessageCircle, ChevronDown, ChevronUp } from 'lucide-react';
+import { CheckCircle2, Truck, Star, Phone, ShoppingCart, Award, ShieldCheck, HeartPulse, Clock, MessageCircle, ChevronDown, ChevronUp, Leaf } from 'lucide-react';
 
 const products = [
     { id: '250g', name: '২৫০ গ্রাম', price: 300, popular: false },
@@ -91,11 +91,11 @@ export default function Home() {
                     <div className="bg-orange-50 p-4 rounded-lg text-left mb-6">
                         <p className="font-semibold text-gray-700">অর্ডার সামারি:</p>
                         <p className="text-gray-600">আইটেম: {selectedProduct.name} x {quantity}</p>
-                        <p className="text-gray-600">মোট বিল: {total} টাকা (ক্যাশ অন ডেলিভারি)</p>
+                        <p className="text-gray-600">মোট বিল: <span className="font-bold text-orange-600">{total} টাকা</span> (ক্যাশ অন ডেলিভারি)</p>
                     </div>
                     <button
                         onClick={() => { setOrderSuccess(false); setFormData({ name: '', phone: '', address: '' }); setQuantity(1); }}
-                        className="w-full bg-orange-600 text-white font-bold py-3 px-4 rounded-xl hover:bg-orange-700 transition"
+                        className="w-full bg-orange-600 text-white font-bold py-3 px-4 rounded-xl hover:bg-orange-700 transition shadow-lg"
                     >
                         নতুন অর্ডার করুন
                     </button>
@@ -122,31 +122,33 @@ export default function Home() {
             </header>
 
             {/* Hero Section */}
-            <section className="bg-gradient-to-br from-orange-50 to-red-50 py-12 px-4 shadow-inner">
-                <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-8 items-center">
+            <section className="bg-gradient-to-br from-orange-50 to-red-50 py-12 px-4 shadow-inner relative overflow-hidden">
+                {/* Subtle gradient overlay to make text pop */}
+                <div className="absolute inset-0 bg-gradient-to-t from-orange-50/50 to-transparent pointer-events-none z-0"></div>
+                <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-8 items-center relative z-10">
                     <div>
-                        <div className="inline-flex bg-red-100 text-red-700 px-3 py-1 rounded-full text-sm font-semibold mb-6 items-center gap-2 animate-pulse">
+                        <div className="inline-flex bg-red-100 text-red-700 px-3 py-1 rounded-full text-sm font-semibold mb-6 items-center gap-2 animate-pulse shadow-sm">
                             <Clock size={16} /> সীমিত স্টক – অফারটি দ্রুত শেষ হচ্ছে!
                         </div>
-                        <h2 className="text-4xl md:text-5xl font-extrabold text-gray-900 mb-6 leading-tight">
-                            প্রিমিয়াম ক্রিসপি <span className="text-orange-600">পেয়াজ বেরেস্তা</span> <br /> এখন সুলভ মূল্যে!
+                        <h2 className="text-4xl md:text-5xl font-extrabold text-gray-900 mb-6 leading-tight drop-shadow-sm">
+                            প্রিমিয়াম ক্রিসপি <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-600 to-red-600">পেয়াজ বেরেস্তা</span> <br /> এখন সুলভ মূল্যে!
                         </h2>
                         <p className="text-lg text-gray-700 mb-8 leading-relaxed">
                             পেয়াজ বেরেস্তা শুধু স্বাদেই নয়, খাবারের সৌন্দর্যেও এনে দেয় এক অনন্য মাত্রা। বিরিয়ানি, পোলাও, খিচুড়ি বা কোরমার উপর ছিটিয়ে দিন সামান্য দেখবেন, গন্ধ, টেক্সচার আর টেস্ট কয়েক গুণ বেড়ে গেছে!
                         </p>
                         <div className="flex flex-col sm:flex-row gap-4">
-                            <a href="#order" className="bg-orange-600 text-white px-8 py-4 rounded-xl font-bold text-lg hover:bg-orange-700 hover:shadow-lg transition flex items-center justify-center gap-2">
+                            <a href="#order" className="bg-gradient-to-r from-orange-600 to-orange-500 text-white px-8 py-4 rounded-xl font-bold text-lg hover:from-orange-700 hover:to-orange-600 shadow-xl hover:shadow-2xl transition-all transform hover:-translate-y-1 flex items-center justify-center gap-2">
                                 <ShoppingCart size={20} /> এখনই কিনে নিন
                             </a>
                         </div>
                         {/* Trust Badges - Hero */}
                         <div className="mt-8 flex items-center gap-6 text-sm font-semibold text-gray-600">
-                            <div className="flex items-center gap-1"><Truck className="text-orange-500" size={18} /> দ্রুত ডেলিভারি</div>
-                            <div className="flex items-center gap-1"><CheckCircle2 className="text-orange-500" size={18} /> ক্যাশ অন ডেলিভারি</div>
+                            <div className="flex items-center gap-1 bg-white p-2 rounded-lg shadow-sm border border-orange-100"><Truck className="text-orange-500" size={18} /> দ্রুত ডেলিভারি</div>
+                            <div className="flex items-center gap-1 bg-white p-2 rounded-lg shadow-sm border border-orange-100"><CheckCircle2 className="text-orange-500" size={18} /> ক্যাশ অন ডেলিভারি</div>
                         </div>
                     </div>
                     <div className="relative">
-                        <div className="aspect-square bg-orange-200 rounded-full absolute -inset-4 blur-3xl opacity-50 animate-pulse"></div>
+                        <div className="aspect-square bg-orange-300 rounded-full absolute -inset-4 blur-3xl opacity-40 animate-pulse"></div>
                         <div className="absolute top-4 -right-4 bg-white p-3 rounded-2xl shadow-xl z-20 flex items-center gap-3">
                             <div className="bg-green-100 p-2 rounded-full text-green-600"><CheckCircle2 size={24} /></div>
                             <div>
@@ -170,26 +172,26 @@ export default function Home() {
                 <div className="max-w-5xl mx-auto">
                     <div className="text-center mb-12">
                         <h3 className="text-3xl font-bold text-gray-900 mb-4">কেন আমাদের পেয়াজ বেরেস্তা সেরা?</h3>
-                        <div className="w-24 h-1 bg-orange-500 mx-auto rounded-full"></div>
+                        <div className="w-24 h-1 bg-gradient-to-r from-orange-400 to-orange-600 mx-auto rounded-full"></div>
                     </div>
 
                     <div className="grid md:grid-cols-3 gap-8">
-                        <div className="bg-orange-50 p-6 rounded-2xl border border-orange-100 hover:shadow-md transition">
-                            <div className="w-12 h-12 bg-white rounded-xl flex items-center justify-center text-orange-600 mb-4 shadow-sm">
+                        <div className="bg-gradient-to-b from-orange-50 to-white p-6 rounded-2xl border border-orange-100 hover:shadow-lg transition-shadow">
+                            <div className="w-12 h-12 bg-white rounded-xl flex items-center justify-center text-orange-600 mb-4 shadow-sm border border-orange-50">
                                 <ShieldCheck size={28} />
                             </div>
                             <h4 className="text-xl font-bold mb-2">১০০% খাঁটি ও ক্রিসপি</h4>
                             <p className="text-gray-600">আমরা সেরা মানের পেঁয়াজ ও তেল ব্যবহার করি, তাই এটি দীর্ঘসময় মুচমুচে থাকে।</p>
                         </div>
-                        <div className="bg-orange-50 p-6 rounded-2xl border border-orange-100 hover:shadow-md transition">
-                            <div className="w-12 h-12 bg-white rounded-xl flex items-center justify-center text-orange-600 mb-4 shadow-sm">
+                        <div className="bg-gradient-to-b from-orange-50 to-white p-6 rounded-2xl border border-orange-100 hover:shadow-lg transition-shadow">
+                            <div className="w-12 h-12 bg-white rounded-xl flex items-center justify-center text-orange-600 mb-4 shadow-sm border border-orange-50">
                                 <HeartPulse size={28} />
                             </div>
                             <h4 className="text-xl font-bold mb-2">কোন ঝামেলা নেই</h4>
                             <p className="text-gray-600">রান্নার সময় বাঁচান। প্যাকেট খুলুন আর রেডি টু ইউজ আমাদের বেরেস্তা ব্যবহার করুন।</p>
                         </div>
-                        <div className="bg-orange-50 p-6 rounded-2xl border border-orange-100 hover:shadow-md transition">
-                            <div className="w-12 h-12 bg-white rounded-xl flex items-center justify-center text-orange-600 mb-4 shadow-sm">
+                        <div className="bg-gradient-to-b from-orange-50 to-white p-6 rounded-2xl border border-orange-100 hover:shadow-lg transition-shadow">
+                            <div className="w-12 h-12 bg-white rounded-xl flex items-center justify-center text-orange-600 mb-4 shadow-sm border border-orange-50">
                                 <Award size={28} />
                             </div>
                             <h4 className="text-xl font-bold mb-2">ঘরোয়া স্বাদ, রেস্তোরাঁ মান</h4>
@@ -214,12 +216,12 @@ export default function Home() {
                 <div className="max-w-5xl mx-auto">
                     <div className="text-center mb-12">
                         <h3 className="text-3xl font-bold text-gray-900 mb-4">আমাদের গ্রাহকরা কী বলছেন?</h3>
-                        <div className="w-24 h-1 bg-orange-500 mx-auto rounded-full mb-4"></div>
+                        <div className="w-24 h-1 bg-gradient-to-r from-orange-400 to-orange-600 mx-auto rounded-full mb-4"></div>
                         <p className="text-gray-600">সারা বাংলাদেশের হাজারো সন্তুষ্ট গ্রাহকের ভালোবাসা</p>
                     </div>
                     <div className="grid md:grid-cols-3 gap-6">
                         {reviews.map((review, i) => (
-                            <div key={i} className="bg-gray-50 p-6 rounded-2xl border border-gray-100 shadow-sm relative">
+                            <div key={i} className="bg-gray-50 p-6 rounded-2xl border border-gray-100 shadow-sm relative hover:shadow-md transition">
                                 <div className="flex text-orange-400 mb-3">
                                     {[...Array(5)].map((_, idx) => (
                                         <Star key={idx} size={18} className={idx < review.rating ? "fill-orange-400" : "fill-gray-200 text-gray-200"} />
@@ -227,7 +229,7 @@ export default function Home() {
                                 </div>
                                 <p className="text-gray-700 italic mb-4">"{review.comment}"</p>
                                 <div className="font-bold text-gray-900">- {review.name}</div>
-                                <div className="absolute top-4 right-4 text-green-500 bg-green-50 px-2 py-0.5 rounded text-xs font-bold flex items-center gap-1">
+                                <div className="absolute top-4 right-4 text-green-600 bg-green-100 px-2 py-0.5 rounded text-xs font-bold flex items-center gap-1">
                                     <CheckCircle2 size={12} /> Verified
                                 </div>
                             </div>
@@ -238,14 +240,16 @@ export default function Home() {
 
             {/* Checkout Section */}
             <section id="order" className="py-16 px-4 max-w-5xl mx-auto">
-                <div className="bg-white rounded-3xl shadow-xl overflow-hidden border border-gray-100 flex flex-col lg:flex-row">
+                <div className="bg-white rounded-3xl shadow-2xl overflow-hidden border border-gray-100 flex flex-col lg:flex-row">
 
                     {/* Order Details Left */}
                     <div className="p-8 lg:w-1/2 bg-gray-50 border-r border-gray-100 relative">
                         {/* Decorative Background */}
                         <div className="absolute top-0 right-0 w-32 h-32 bg-orange-100 rounded-full opacity-50 -mr-16 -mt-16 pointer-events-none"></div>
 
-                        <h3 className="text-2xl font-bold mb-6 relative z-10">অর্ডার সামারি</h3>
+                        <h3 className="text-2xl font-bold mb-6 relative z-10 flex items-center gap-2">
+                            <ShoppingCart className="text-orange-600" /> অর্ডার সামারি
+                        </h3>
 
                         <div className="space-y-4 mb-8">
                             <p className="text-sm font-semibold text-gray-500 uppercase tracking-wider">প্যাকেজ নির্বাচন করুন</p>
@@ -255,11 +259,15 @@ export default function Home() {
                                         key={p.id}
                                         type="button"
                                         onClick={() => setSelectedProduct(p)}
-                                        className={`p-3 rounded-xl border-2 text-left transition relative overflow-hidden ${selectedProduct.id === p.id ? 'border-orange-600 bg-orange-50 ring-2 ring-orange-200' : 'border-gray-200 hover:border-orange-300 bg-white'}`}
+                                        className={`p-4 rounded-xl border-2 text-left transition relative overflow-hidden group ${selectedProduct.id === p.id ? 'border-orange-600 bg-orange-50 ring-2 ring-orange-200 shadow-sm' : 'border-gray-200 hover:border-orange-300 bg-white hover:bg-orange-50/50'}`}
                                     >
-                                        {p.popular && <div className="absolute top-0 right-0 bg-red-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-bl-lg">জনপ্রিয়</div>}
-                                        <div className="font-bold text-gray-900 mt-2">{p.name}</div>
-                                        <div className="text-orange-600 font-semibold">{p.price}৳</div>
+                                        {p.popular && <div className="absolute top-0 right-0 bg-red-500 text-white text-[10px] font-bold px-2 py-1 rounded-bl-lg shadow-sm">জনপ্রিয়</div>}
+                                        <div className="font-bold text-gray-900 mt-1 text-lg">{p.name}</div>
+                                        <div className="text-orange-600 font-extrabold text-xl tracking-tight">{p.price}৳</div>
+                                        {/* Micro Badges in Package */}
+                                        <div className="flex gap-1 mt-2">
+                                            <span className="text-[10px] bg-green-100 text-green-700 px-1.5 py-0.5 rounded flex items-center gap-0.5 font-semibold"><Leaf size={10} /> ন্যাচারাল</span>
+                                        </div>
                                     </button>
                                 ))}
                             </div>
@@ -268,13 +276,13 @@ export default function Home() {
                         <div className="space-y-4 mb-8">
                             <p className="text-sm font-semibold text-gray-500 uppercase tracking-wider">পরিমাণ</p>
                             <div className="flex items-center gap-4 bg-white border border-gray-200 w-max rounded-xl overflow-hidden shadow-sm relative z-10">
-                                <button type="button" onClick={() => setQuantity(Math.max(1, quantity - 1))} className="px-5 py-2 hover:bg-gray-100 text-xl font-bold text-gray-600 transition">-</button>
-                                <span className="font-bold text-lg w-8 text-center">{quantity}</span>
-                                <button type="button" onClick={() => setQuantity(quantity + 1)} className="px-5 py-2 hover:bg-gray-100 text-xl font-bold text-gray-600 transition">+</button>
+                                <button type="button" onClick={() => setQuantity(Math.max(1, quantity - 1))} className="px-5 py-2 hover:bg-orange-50 text-xl font-bold text-orange-600 transition">-</button>
+                                <span className="font-bold text-lg w-8 text-center bg-gray-50 py-1 rounded">{quantity}</span>
+                                <button type="button" onClick={() => setQuantity(quantity + 1)} className="px-5 py-2 hover:bg-orange-50 text-xl font-bold text-orange-600 transition">+</button>
                             </div>
                         </div>
 
-                        <div className="bg-white p-5 rounded-xl border border-gray-200 shadow-sm relative z-10">
+                        <div className="bg-white p-5 rounded-xl border border-gray-200 shadow-md relative z-10">
                             <div className="flex justify-between mb-2 text-gray-600">
                                 <span>সাবটোটাল ({quantity}x {selectedProduct.name})</span>
                                 <span className="font-semibold">{subtotal}৳</span>
@@ -283,12 +291,12 @@ export default function Home() {
                                 <span>ডেলিভারি চার্জ ({zone})</span>
                                 <span className="font-semibold">{deliveryCharge}৳</span>
                             </div>
-                            <div className="border-t border-gray-100 my-3"></div>
-                            <div className="flex justify-between text-xl font-bold text-gray-900">
+                            <div className="border-t border-dashed border-gray-300 my-3"></div>
+                            <div className="flex justify-between items-center text-xl font-bold text-gray-900">
                                 <span>সর্বমোট</span>
-                                <span className="text-orange-600 text-2xl">{total}৳</span>
+                                <span className="text-orange-600 text-3xl">{total}৳</span>
                             </div>
-                            <div className="bg-green-50 text-green-700 text-sm text-center py-2 mt-4 rounded-lg font-semibold flex items-center justify-center gap-2 border border-green-100">
+                            <div className="bg-green-50 text-green-700 text-sm text-center py-2.5 mt-4 rounded-lg font-semibold flex items-center justify-center gap-2 border border-green-200 shadow-inner">
                                 <Truck size={18} /> ক্যাশ অন ডেলিভারি (পণ্য হাতে পেয়ে টাকা দিন)
                             </div>
                         </div>
@@ -306,7 +314,7 @@ export default function Home() {
                                     type="text"
                                     value={formData.name}
                                     onChange={e => setFormData({ ...formData, name: e.target.value })}
-                                    className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none transition bg-gray-50 focus:bg-white"
+                                    className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none transition bg-gray-50 focus:bg-white shadow-sm"
                                     placeholder="সম্পূর্ণ নাম লিখুন"
                                 />
                             </div>
@@ -318,7 +326,7 @@ export default function Home() {
                                     type="tel"
                                     value={formData.phone}
                                     onChange={e => setFormData({ ...formData, phone: e.target.value })}
-                                    className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none transition bg-gray-50 focus:bg-white"
+                                    className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none transition bg-gray-50 focus:bg-white shadow-sm"
                                     placeholder="01XXXXXXXXX"
                                 />
                             </div>
@@ -329,14 +337,14 @@ export default function Home() {
                                     <button
                                         type="button"
                                         onClick={() => setZone('Dhaka')}
-                                        className={`py-3 px-4 rounded-xl border font-semibold transition ${zone === 'Dhaka' ? 'bg-orange-600 text-white border-orange-600 shadow-md' : 'bg-gray-50 text-gray-700 border-gray-300 hover:border-orange-400'}`}
+                                        className={`py-3 px-4 rounded-xl border font-semibold transition ${zone === 'Dhaka' ? 'bg-orange-600 text-white border-orange-600 shadow-md transform scale-[1.02]' : 'bg-gray-50 text-gray-700 border-gray-300 hover:border-orange-400 hover:bg-orange-50'}`}
                                     >
                                         ঢাকার ভিতরে (৬০৳)
                                     </button>
                                     <button
                                         type="button"
                                         onClick={() => setZone('Outside')}
-                                        className={`py-3 px-4 rounded-xl border font-semibold transition ${zone === 'Outside' ? 'bg-orange-600 text-white border-orange-600 shadow-md' : 'bg-gray-50 text-gray-700 border-gray-300 hover:border-orange-400'}`}
+                                        className={`py-3 px-4 rounded-xl border font-semibold transition ${zone === 'Outside' ? 'bg-orange-600 text-white border-orange-600 shadow-md transform scale-[1.02]' : 'bg-gray-50 text-gray-700 border-gray-300 hover:border-orange-400 hover:bg-orange-50'}`}
                                     >
                                         ঢাকার বাইরে (১২০৳)
                                     </button>
@@ -350,7 +358,7 @@ export default function Home() {
                                     rows={3}
                                     value={formData.address}
                                     onChange={e => setFormData({ ...formData, address: e.target.value })}
-                                    className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none transition resize-none bg-gray-50 focus:bg-white"
+                                    className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none transition resize-none bg-gray-50 focus:bg-white shadow-sm"
                                     placeholder="বাসা নং, রোড নং, এলাকা, থানা, জেলা"
                                 />
                             </div>
@@ -358,12 +366,12 @@ export default function Home() {
                             <button
                                 disabled={isSubmitting}
                                 type="submit"
-                                className={`w-full text-white font-bold text-xl py-4 rounded-xl shadow-lg transition flex items-center justify-center gap-2 ${isSubmitting ? 'bg-gray-400 cursor-not-allowed' : 'bg-orange-600 hover:bg-orange-700 hover:-translate-y-1'}`}
+                                className={`w-full text-white font-bold text-xl py-4 rounded-xl shadow-xl transition-all flex items-center justify-center gap-2 ${isSubmitting ? 'bg-gray-400 cursor-not-allowed' : 'bg-gradient-to-r from-orange-600 to-orange-500 hover:from-orange-700 hover:to-orange-600 hover:-translate-y-1'}`}
                             >
                                 <ShoppingCart size={24} /> {isSubmitting ? 'প্রসেসিং হচ্ছে...' : `অর্ডার কনফার্ম করুন (${total}৳)`}
                             </button>
-                            <div className="text-center text-xs text-gray-500 mt-2 flex items-center justify-center gap-1">
-                                <ShieldCheck size={14} /> আপনার তথ্য সম্পূর্ণ নিরাপদ
+                            <div className="text-center text-xs text-gray-500 mt-2 flex items-center justify-center gap-1 font-semibold">
+                                <ShieldCheck size={14} className="text-green-600" /> আপনার তথ্য সম্পূর্ণ নিরাপদ
                             </div>
 
                         </form>
@@ -377,20 +385,20 @@ export default function Home() {
                 <div className="max-w-3xl mx-auto">
                     <div className="text-center mb-10">
                         <h3 className="text-3xl font-bold text-gray-900 mb-4">সাধারণ জিজ্ঞাসা (FAQ)</h3>
-                        <div className="w-16 h-1 bg-orange-500 mx-auto rounded-full"></div>
+                        <div className="w-16 h-1 bg-gradient-to-r from-orange-400 to-orange-600 mx-auto rounded-full"></div>
                     </div>
                     <div className="space-y-4">
                         {faqs.map((faq, index) => (
-                            <div key={index} className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+                            <div key={index} className="bg-white rounded-2xl shadow-sm border border-orange-100 overflow-hidden group">
                                 <button
                                     onClick={() => toggleFaq(index)}
-                                    className="w-full text-left p-5 font-bold text-gray-900 flex justify-between items-center focus:outline-none"
+                                    className="w-full text-left p-5 font-bold text-gray-900 flex justify-between items-center focus:outline-none group-hover:bg-orange-50/30 transition"
                                 >
                                     {faq.q}
                                     {openFaqIndex === index ? <ChevronUp className="text-orange-500" /> : <ChevronDown className="text-gray-400" />}
                                 </button>
                                 {openFaqIndex === index && (
-                                    <div className="p-5 pt-0 text-gray-600 border-t border-gray-50 bg-gray-50">
+                                    <div className="p-5 pt-0 text-gray-600 border-t border-gray-50 bg-gray-50/50">
                                         {faq.a}
                                     </div>
                                 )}
@@ -401,25 +409,30 @@ export default function Home() {
             </section>
 
             {/* Footer */}
-            <footer className="bg-gray-900 text-white py-12 px-4">
+            <footer className="bg-gray-900 text-white py-12 px-4 shadow-inner relative z-10">
                 <div className="max-w-5xl mx-auto flex flex-col md:flex-row justify-between items-center text-center md:text-left gap-8">
                     <div>
-                        <h4 className="text-2xl font-bold text-orange-500 mb-2">ILHAM's Kitchen</h4>
+                        <div className="flex items-center justify-center md:justify-start gap-2 mb-4">
+                            <div className="w-10 h-10 bg-orange-500 rounded-full flex items-center justify-center text-white font-bold text-xl shadow-lg">
+                                IK
+                            </div>
+                            <h4 className="text-2xl font-bold text-white tracking-tight">ILHAM's Kitchen</h4>
+                        </div>
                         <p className="text-gray-400 max-w-sm">সেরা মানের, স্বাস্থ্যসম্মত ও ১০০% খাঁটি ক্রিসপি পেয়াজ বেরেস্তা।</p>
                     </div>
                     <div>
                         <h5 className="text-lg font-semibold mb-3 border-b border-gray-700 pb-2 inline-block">গুরুত্বপূর্ণ লিংক</h5>
                         <ul className="text-gray-400 space-y-2">
-                            <li><a href="#order" className="hover:text-orange-400 transition">অর্ডার করুন</a></li>
+                            <li><a href="#order" className="hover:text-orange-400 transition flex items-center gap-2 justify-center md:justify-start"><ShoppingCart size={14} /> অর্ডার করুন</a></li>
                             <li><a href="#" className="hover:text-orange-400 transition">রিফান্ড পলিসি</a></li>
                             <li><a href="#" className="hover:text-orange-400 transition">প্রাইভেসি পলিসি</a></li>
                         </ul>
                     </div>
                     <div>
                         <h5 className="text-lg font-semibold mb-3 border-b border-gray-700 pb-2 inline-block">যোগাযোগ</h5>
-                        <p className="text-gray-400 flex items-center justify-center md:justify-start gap-2 mb-2"><Phone size={16} /> 01679226855</p>
+                        <p className="text-gray-400 flex items-center justify-center md:justify-start gap-2 mb-3 bg-gray-800 w-max mx-auto md:mx-0 px-4 py-2 rounded-lg"><Phone size={16} className="text-orange-500" /> 01679226855</p>
                         <p className="text-gray-400 flex items-center justify-center md:justify-start gap-2">
-                            <a href="https://www.facebook.com/profile.php?id=61561058960023" target="_blank" rel="noopener noreferrer" className="hover:text-orange-400 transition">Facebook Page</a>
+                            <a href="https://www.facebook.com/profile.php?id=61561058960023" target="_blank" rel="noopener noreferrer" className="hover:text-orange-400 transition underline underline-offset-4 decoration-gray-600">Facebook Page</a>
                         </p>
                     </div>
                 </div>
@@ -431,9 +444,9 @@ export default function Home() {
             {/* Floating Elements (Mobile CTA & WhatsApp) */}
 
             {/* Mobile Sticky Order Button */}
-            <div className="md:hidden fixed bottom-0 left-0 right-0 bg-white p-3 border-t border-gray-200 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)] z-50">
-                <a href="#order" className="w-full bg-orange-600 text-white font-bold py-3 rounded-xl shadow-lg flex items-center justify-center gap-2 animate-bounce hover:animate-none">
-                    <ShoppingCart size={20} /> এখনই অর্ডার করুন
+            <div className="md:hidden fixed bottom-0 left-0 right-0 bg-white/90 backdrop-blur-md p-3 border-t border-gray-200 shadow-[0_-10px_15px_-3px_rgba(0,0,0,0.1)] z-50">
+                <a href="#order" className="w-full bg-gradient-to-r from-orange-600 to-orange-500 text-white font-extrabold text-lg py-3.5 rounded-xl shadow-xl flex items-center justify-center gap-2 animate-[pulse_2s_ease-in-out_infinite]">
+                    <ShoppingCart size={22} /> এখনই অর্ডার করুন
                 </a>
             </div>
 
@@ -442,14 +455,13 @@ export default function Home() {
                 href="https://wa.me/+8801679226855"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="fixed bottom-20 md:bottom-6 right-4 md:right-6 bg-green-500 text-white p-4 rounded-full shadow-2xl hover:bg-green-600 hover:scale-110 transition-transform duration-300 z-50 flex items-center justify-center"
+                className="fixed bottom-[88px] md:bottom-8 right-4 md:right-8 bg-green-500 text-white p-4 rounded-full shadow-2xl hover:bg-green-600 hover:scale-110 transition-transform duration-300 z-50 flex items-center justify-center border-4 border-white/50"
                 aria-label="Contact on WhatsApp"
             >
                 <div className="absolute inset-0 bg-green-500 rounded-full animate-ping opacity-30"></div>
-                <MessageCircle size={28} className="relative z-10" />
+                <MessageCircle size={32} className="relative z-10" />
             </a>
 
         </main>
     );
 }
-
