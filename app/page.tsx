@@ -105,7 +105,7 @@ export default function Home() {
     }
 
     return (
-        <main className="min-h-screen bg-gray-50 pb-20 relative">
+        <main className="min-h-screen bg-gray-50 relative">
             {/* Header */}
             <header className="bg-white shadow-sm sticky top-0 z-40">
                 <div className="max-w-5xl mx-auto px-4 py-3 flex justify-between items-center">
@@ -409,7 +409,7 @@ export default function Home() {
             </section>
 
             {/* Footer */}
-            <footer className="bg-gray-900 text-white py-12 px-4 shadow-inner relative z-10">
+            <footer className="bg-gray-900 text-white pt-12 pb-28 md:pb-12 px-4 shadow-inner relative z-10">
                 <div className="max-w-5xl mx-auto flex flex-col md:flex-row justify-between items-center text-center md:text-left gap-8">
                     <div>
                         <div className="flex items-center justify-center md:justify-start gap-2 mb-4">
