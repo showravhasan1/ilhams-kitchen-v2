@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { Package, Truck, CheckCircle, XCircle, Search, DollarSign, Clock, Download, Printer, Trash2, Calendar, ChevronLeft, ChevronRight, MessageCircle, Copy } from 'lucide-react';
 
 interface Order {
@@ -40,6 +40,7 @@ export default function AdminDashboard() {
             if (data.success) {
                 setOrders(data.orders);
                 setIsAuthenticated(true);
+                sessionStorage.setItem('adminAuth', pwd);
             } else {
                 alert('ভুল পাসওয়ার্ড!');
             }
@@ -49,6 +50,22 @@ export default function AdminDashboard() {
         } finally {
             setLoading(false);
         }
+    };
+
+    useEffect(() => {
+        const savedAuth = sessionStorage.getItem('adminAuth');
+        if (savedAuth) {
+            setPassword(savedAuth);
+            fetchOrders(savedAuth);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    const handleLogout = () => {
+        setIsAuthenticated(false);
+        setPassword('');
+        setOrders([]);
+        sessionStorage.removeItem('adminAuth');
     };
 
     const handleLogin = async (e: React.FormEvent) => {
@@ -286,12 +303,15 @@ export default function AdminDashboard() {
                         <h1 className="text-3xl font-bold text-gray-900 leading-tight">অর্ডার ড্যাশবোর্ড</h1>
                         <p className="text-gray-500 mt-1 sm:mt-2 text-sm sm:text-base">সব অর্ডার ম্যানেজ করুন এবং আপডেট করুন</p>
                     </div>
-                    <div className="flex gap-2 w-full sm:w-auto mt-2 sm:mt-0">
+                    <div className="flex gap-2 w-full sm:w-auto mt-2 sm:mt-0 flex-wrap sm:flex-nowrap">
                         <button onClick={exportToCSV} className="flex-1 sm:flex-none justify-center bg-green-100 text-green-700 px-4 py-2.5 rounded-xl font-bold hover:bg-green-200 transition shadow-sm flex items-center gap-2 text-sm sm:text-base">
                             <Download size={18} /> CSV
                         </button>
                         <button onClick={() => fetchOrders(password)} className="flex-1 sm:flex-none justify-center bg-orange-100 text-orange-700 px-5 py-2.5 rounded-xl font-bold hover:bg-orange-200 transition shadow-sm text-sm sm:text-base">
                             রিফ্রেশ
+                        </button>
+                        <button onClick={handleLogout} className="flex-1 sm:flex-none justify-center bg-red-100 text-red-700 px-5 py-2.5 rounded-xl font-bold hover:bg-red-200 transition shadow-sm text-sm sm:text-base">
+                            লগআউট
                         </button>
                     </div>
                 </div>
