@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import { CheckCircle2, Truck, Star, Phone, ShoppingCart, Award, ShieldCheck, HeartPulse, Clock, MessageCircle, ChevronDown, ChevronUp, Leaf } from 'lucide-react';
 
 const products = [
@@ -24,6 +25,7 @@ const reviews = [
 ];
 
 export default function Home() {
+    const router = useRouter();
     const [selectedProduct, setSelectedProduct] = useState(products[1]);
     const [quantity, setQuantity] = useState(1);
     const [zone, setZone] = useState('Dhaka');
@@ -56,10 +58,17 @@ export default function Home() {
             });
 
             if (res.ok) {
-                setOrderSuccess(true);
+                const data = await res.json();
                 // Fire Facebook Pixel Event here if available
                 if (typeof window !== 'undefined' && (window as any).fbq) {
                     (window as any).fbq('track', 'Purchase', { currency: 'BDT', value: total });
+                }
+
+                // Redirect to the premium Thank You page
+                if (data.success && data.order) {
+                    router.push(`/thank-you?id=${data.order.id}`);
+                } else {
+                    router.push('/thank-you');
                 }
             } else {
                 alert('কোথাও কোনো সমস্যা হয়েছে। দয়া করে আবার চেষ্টা করুন।');
@@ -79,41 +88,20 @@ export default function Home() {
         }
     };
 
-    if (orderSuccess) {
-        return (
-            <main className="min-h-screen flex items-center justify-center p-4 bg-orange-50">
-                <div className="bg-white p-8 rounded-2xl shadow-xl max-w-md w-full text-center">
-                    <div className="w-20 h-20 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-6">
-                        <CheckCircle2 size={40} />
-                    </div>
-                    <h1 className="text-3xl font-bold text-gray-900 mb-2">অর্ডার সফল হয়েছে!</h1>
-                    <p className="text-gray-600 mb-6">আপনার অর্ডারটি আমরা পেয়েছি। খুব শীঘ্রই আমাদের একজন প্রতিনিধি আপনার সাথে যোগাযোগ করবেন।</p>
-                    <div className="bg-orange-50 p-4 rounded-lg text-left mb-6">
-                        <p className="font-semibold text-gray-700">অর্ডার সামারি:</p>
-                        <p className="text-gray-600">আইটেম: {selectedProduct.name} x {quantity}</p>
-                        <p className="text-gray-600">মোট বিল: <span className="font-bold text-orange-600">{total} টাকা</span> (ক্যাশ অন ডেলিভারি)</p>
-                    </div>
-                    <button
-                        onClick={() => { setOrderSuccess(false); setFormData({ name: '', phone: '', address: '' }); setQuantity(1); }}
-                        className="w-full bg-orange-600 text-white font-bold py-3 px-4 rounded-xl hover:bg-orange-700 transition shadow-lg"
-                    >
-                        নতুন অর্ডার করুন
-                    </button>
-                </div>
-            </main>
-        );
-    }
-
     return (
         <main className="min-h-screen bg-gray-50 relative">
             {/* Header */}
             <header className="bg-white shadow-sm sticky top-0 z-40">
                 <div className="max-w-5xl mx-auto px-4 py-3 flex justify-between items-center">
                     <div className="flex items-center gap-2">
-                        <div className="w-10 h-10 bg-orange-100 rounded-full flex items-center justify-center">
-                            <span className="font-bold text-xl text-orange-600">IK</span>
-                        </div>
-                        <h1 className="text-xl font-bold text-gray-900 tracking-tight">ILHAM's Kitchen</h1>
+                        <Image
+                            src="/logo.png"
+                            alt="ILHAM's Kitchen Logo"
+                            width={50}
+                            height={50}
+                            priority
+                            className="object-contain drop-shadow-sm"
+                        />
                     </div>
                     <a href="#order" className="hidden md:inline-block bg-orange-600 text-white px-4 py-2 rounded-full text-sm font-semibold hover:bg-orange-700 transition">
                         অর্ডার করুন
@@ -122,9 +110,9 @@ export default function Home() {
             </header>
 
             {/* Hero Section */}
-            <section className="bg-gradient-to-br from-orange-50 to-red-50 py-12 px-4 shadow-inner relative overflow-hidden">
+            < section className="bg-gradient-to-br from-orange-50 to-red-50 py-12 px-4 shadow-inner relative overflow-hidden" >
                 {/* Subtle gradient overlay to make text pop */}
-                <div className="absolute inset-0 bg-gradient-to-t from-orange-50/50 to-transparent pointer-events-none z-0"></div>
+                < div className="absolute inset-0 bg-gradient-to-t from-orange-50/50 to-transparent pointer-events-none z-0" ></div >
                 <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-8 items-center relative z-10">
                     <div>
                         <div className="inline-flex bg-red-100 text-red-700 px-3 py-1 rounded-full text-sm font-semibold mb-6 items-center gap-2 animate-pulse shadow-sm">
@@ -165,10 +153,10 @@ export default function Home() {
                         />
                     </div>
                 </div>
-            </section>
+            </section >
 
             {/* Features */}
-            <section className="py-16 bg-white px-4">
+            < section className="py-16 bg-white px-4" >
                 <div className="max-w-5xl mx-auto">
                     <div className="text-center mb-12">
                         <h3 className="text-3xl font-bold text-gray-900 mb-4">কেন আমাদের পেয়াজ বেরেস্তা সেরা?</h3>
@@ -199,20 +187,20 @@ export default function Home() {
                         </div>
                     </div>
                 </div>
-            </section>
+            </section >
 
             {/* Gallery / Social Proof */}
-            <section className="py-12 bg-gray-50 px-4">
+            < section className="py-12 bg-gray-50 px-4" >
                 <div className="max-w-5xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-4">
                     <Image src="/images/WhatsApp Image 2026-02-22 at 02.21.11.jpeg" alt="Product 1" width={300} height={300} className="rounded-xl shadow-md w-full h-48 object-cover hover:scale-105 transition duration-300" />
                     <Image src="/images/WhatsApp Image 2026-02-22 at 02.21.35.jpeg" alt="Product 2" width={300} height={300} className="rounded-xl shadow-md w-full h-48 object-cover hover:scale-105 transition duration-300" />
                     <Image src="/images/WhatsApp Image 2026-01-08 at 22.37.44.jpeg" alt="Product 3" width={300} height={300} className="rounded-xl shadow-md w-full h-48 object-cover hover:scale-105 transition duration-300" />
                     <Image src="/images/h.jpeg" alt="Product 4" width={300} height={300} className="rounded-xl shadow-md w-full h-48 object-cover bg-white hover:scale-105 transition duration-300" />
                 </div>
-            </section>
+            </section >
 
             {/* Customer Testimonials */}
-            <section className="py-16 bg-white px-4">
+            < section className="py-16 bg-white px-4" >
                 <div className="max-w-5xl mx-auto">
                     <div className="text-center mb-12">
                         <h3 className="text-3xl font-bold text-gray-900 mb-4">আমাদের গ্রাহকরা কী বলছেন?</h3>
@@ -236,10 +224,10 @@ export default function Home() {
                         ))}
                     </div>
                 </div>
-            </section>
+            </section >
 
             {/* Checkout Section */}
-            <section id="order" className="py-16 px-4 max-w-5xl mx-auto">
+            < section id="order" className="py-16 px-4 max-w-5xl mx-auto" >
                 <div className="bg-white rounded-3xl shadow-2xl overflow-hidden border border-gray-100 flex flex-col lg:flex-row">
 
                     {/* Order Details Left */}
@@ -378,10 +366,10 @@ export default function Home() {
                     </div>
 
                 </div>
-            </section>
+            </section >
 
             {/* FAQ Section */}
-            <section className="py-16 bg-orange-50 px-4 border-t border-orange-100">
+            < section className="py-16 bg-orange-50 px-4 border-t border-orange-100" >
                 <div className="max-w-3xl mx-auto">
                     <div className="text-center mb-10">
                         <h3 className="text-3xl font-bold text-gray-900 mb-4">সাধারণ জিজ্ঞাসা (FAQ)</h3>
@@ -406,10 +394,10 @@ export default function Home() {
                         ))}
                     </div>
                 </div>
-            </section>
+            </section >
 
             {/* Footer */}
-            <footer className="bg-gray-900 text-white pt-12 pb-28 md:pb-12 px-4 shadow-inner relative z-10">
+            < footer className="bg-gray-900 text-white pt-12 pb-28 md:pb-12 px-4 shadow-inner relative z-10" >
                 <div className="max-w-5xl mx-auto flex flex-col md:flex-row justify-between items-center text-center md:text-left gap-8">
                     <div>
                         <div className="flex items-center justify-center md:justify-start gap-2 mb-4">
@@ -439,7 +427,7 @@ export default function Home() {
                 <div className="max-w-5xl mx-auto mt-12 pt-6 border-t border-gray-800 text-center text-gray-500 text-sm">
                     &copy; {new Date().getFullYear()} ILHAM's Kitchen. All rights reserved.
                 </div>
-            </footer>
+            </footer >
 
             {/* Floating Elements (Mobile CTA & WhatsApp) */}
 
@@ -462,6 +450,6 @@ export default function Home() {
                 <MessageCircle size={32} className="relative z-10" />
             </a>
 
-        </main>
+        </main >
     );
 }

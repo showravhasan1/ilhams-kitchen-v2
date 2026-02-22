@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useMemo } from 'react';
-import { Package, Truck, CheckCircle, XCircle, Search, DollarSign, Clock, Download, Printer, Trash2, Calendar, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Package, Truck, CheckCircle, XCircle, Search, DollarSign, Clock, Download, Printer, Trash2, Calendar, ChevronLeft, ChevronRight, MessageCircle, Copy } from 'lucide-react';
 
 interface Order {
     id: string;
@@ -25,6 +25,7 @@ export default function AdminDashboard() {
     // Feature States
     const [searchTerm, setSearchTerm] = useState('');
     const [dateFilter, setDateFilter] = useState('all'); // all, today, week, month
+    const [activeTab, setActiveTab] = useState('Pending');
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 20;
 
@@ -126,10 +127,20 @@ export default function AdminDashboard() {
 
     // Derived State Computations
     const filteredOrders = useMemo(() => {
-        let filtered = orders.filter(o =>
-            o.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            o.phone.includes(searchTerm)
-        );
+        let filtered = orders;
+
+        // 1. Filter by Active Tab
+        if (activeTab !== 'All') {
+            filtered = filtered.filter(o => o.status === activeTab);
+        }
+
+        // 2. Filter by Search Term
+        if (searchTerm) {
+            filtered = filtered.filter(o =>
+                o.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                o.phone.includes(searchTerm)
+            );
+        }
 
         const now = new Date();
         if (dateFilter === 'today') {
@@ -143,7 +154,7 @@ export default function AdminDashboard() {
         }
 
         return filtered;
-    }, [orders, searchTerm, dateFilter]);
+    }, [orders, searchTerm, dateFilter, activeTab]);
 
     // Pagination
     const totalPages = Math.ceil(filteredOrders.length / itemsPerPage);
@@ -196,9 +207,12 @@ export default function AdminDashboard() {
             {printOrder && (
                 <div className="hidden print:block w-full max-w-2xl mx-auto border-4 border-black p-8 rounded-xl">
                     <div className="flex justify-between items-center mb-8 border-b-4 border-black pb-6">
-                        <div>
-                            <h1 className="text-4xl font-black tracking-tight uppercase">ILHAM's Kitchen</h1>
-                            <p className="text-gray-600 font-medium mt-1">Premium Peyaj Beresta</p>
+                        <div className="flex items-center gap-4">
+                            <img src="/logo.png" alt="ILHAM's Kitchen Logo" className="w-[80px] h-[80px] object-contain" />
+                            <div>
+                                <h1 className="text-4xl font-black tracking-tight uppercase">ILHAM's Kitchen</h1>
+                                <p className="text-gray-600 font-medium mt-1">Premium Peyaj Beresta</p>
+                            </div>
                         </div>
                         <div className="text-right">
                             <h2 className="text-2xl font-bold uppercase tracking-wider text-gray-400">Packing Slip</h2>
@@ -281,6 +295,30 @@ export default function AdminDashboard() {
                         </button>
                     </div>
                 </div>
+
+                {/* Workflow Tabs */}
+                {isAuthenticated && (
+                    <div className="flex overflow-x-auto gap-2 mb-6 pb-2 scrollbar-hide">
+                        {['All', 'Pending', 'Confirmed', 'Shipped', 'Delivered', 'Cancelled'].map((tab) => (
+                            <button
+                                key={tab}
+                                onClick={() => { setActiveTab(tab); setCurrentPage(1); }}
+                                className={`px-4 py-2 rounded-full whitespace-nowrap font-bold text-sm transition-all ${activeTab === tab
+                                    ? 'bg-gray-900 text-white shadow-md'
+                                    : 'bg-white text-gray-500 border border-gray-200 hover:bg-gray-100'
+                                    }`}
+                            >
+                                {tab}
+                                {tab !== 'All' && (
+                                    <span className={`ml-2 px-2 py-0.5 rounded-full text-xs ${activeTab === tab ? 'bg-white/20 text-white' : 'bg-gray-100 text-gray-500'
+                                        }`}>
+                                        {orders.filter(o => o.status === tab).length}
+                                    </span>
+                                )}
+                            </button>
+                        ))}
+                    </div>
+                )}
 
                 {loading ? (
                     <div className="flex items-center justify-center py-20">
@@ -384,11 +422,28 @@ export default function AdminDashboard() {
                                                     </td>
                                                     <td className="px-6 py-4">
                                                         <div className="font-bold text-gray-900">{order.name}</div>
-                                                        <div className="text-sm text-gray-600 font-medium font-mono tracking-tight">{order.phone}</div>
+                                                        <div className="text-sm text-gray-600 font-medium font-mono tracking-tight flex items-center gap-1 mt-0.5">
+                                                            {order.phone}
+                                                            <a href={`https://wa.me/88${order.phone}?text=Hello ${order.name}! Thanks for ordering from ILHAM's Kitchen. We are processing your order for ${order.item} Premium Peyaj Beresta. Your total is ৳${order.total}. Have a great day!`} target="_blank" rel="noopener noreferrer" className="text-green-500 hover:text-green-600 ml-1">
+                                                                <MessageCircle size={14} />
+                                                            </a>
+                                                        </div>
                                                     </td>
                                                     <td className="px-6 py-4">
                                                         <div className="text-sm text-gray-700 max-w-[200px] line-clamp-2 leading-snug" title={order.address}>{order.address}</div>
-                                                        <div className="text-xs font-bold text-orange-600 mt-1 uppercase tracking-wide">{order.zone === 'Dhaka' ? 'ঢাকার ভেতরে' : 'ঢাকার বাইরে'}</div>
+                                                        <div className="text-xs font-bold text-orange-600 mt-1 uppercase tracking-wide flex items-center gap-2">
+                                                            {order.zone === 'Dhaka' ? 'ঢাকার ভেতরে' : 'ঢাকার বাইরে'}
+                                                            <button
+                                                                onClick={async () => {
+                                                                    await navigator.clipboard.writeText(`${order.name} | ${order.phone} | ${order.address} | Total: ৳${order.total}`);
+                                                                    alert('Copied to clipboard!');
+                                                                }}
+                                                                className="text-gray-400 hover:text-gray-700"
+                                                                title="Copy for Pathao/RedX"
+                                                            >
+                                                                <Copy size={12} />
+                                                            </button>
+                                                        </div>
                                                     </td>
                                                     <td className="px-6 py-4">
                                                         <div className="inline-flex items-center gap-1.5 bg-gray-100 px-2.5 py-1 rounded-md">
@@ -420,6 +475,7 @@ export default function AdminDashboard() {
                                                             className="border-2 border-gray-200 pl-3 pr-8 py-1.5 rounded-lg bg-white outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 cursor-pointer text-gray-700 font-semibold shadow-sm transition"
                                                         >
                                                             <option value="Pending">🕒 Pending</option>
+                                                            <option value="Confirmed">👍 Confirmed</option>
                                                             <option value="Shipped">🚚 Shipped</option>
                                                             <option value="Delivered">✅ Delivered</option>
                                                             <option value="Cancelled">❌ Cancelled</option>
@@ -466,7 +522,12 @@ export default function AdminDashboard() {
                                         <div className="flex justify-between items-start mb-3">
                                             <div>
                                                 <div className="font-bold text-gray-900 text-base sm:text-lg leading-tight">{order.name}</div>
-                                                <div className="text-xs sm:text-sm text-gray-600 font-mono tracking-tight mt-1"><a href={`tel:${order.phone}`} className="text-blue-600 hover:underline">{order.phone}</a></div>
+                                                <div className="text-xs sm:text-sm text-gray-600 font-mono tracking-tight mt-1 flex items-center gap-1">
+                                                    <a href={`tel:${order.phone}`} className="text-blue-600 hover:underline">{order.phone}</a>
+                                                    <a href={`https://wa.me/88${order.phone}?text=Hello ${order.name}! Thanks for ordering from ILHAM's Kitchen. We are processing your order for ${order.item} Premium Peyaj Beresta. Your total is ৳${order.total}. Have a great day!`} target="_blank" rel="noopener noreferrer" className="text-green-500 hover:text-green-600 ml-1">
+                                                        <MessageCircle size={14} />
+                                                    </a>
+                                                </div>
                                             </div>
                                             <div className="text-right shrink-0">
                                                 <div className="text-xs sm:text-sm font-semibold text-gray-900">{date}</div>
@@ -476,7 +537,19 @@ export default function AdminDashboard() {
 
                                         <div className="bg-gray-50 p-2.5 sm:p-3 rounded-xl mb-3 text-xs sm:text-sm text-gray-700 leading-snug border border-gray-100">
                                             {order.address}
-                                            <div className="mt-1.5 text-[10px] sm:text-xs font-bold text-orange-600 uppercase tracking-wide">{order.zone === 'Dhaka' ? 'ঢাকার ভেতরে' : 'ঢাকার বাইরে'}</div>
+                                            <div className="mt-1.5 flex items-center gap-2">
+                                                <div className="text-[10px] sm:text-xs font-bold text-orange-600 uppercase tracking-wide">{order.zone === 'Dhaka' ? 'ঢাকার ভেতরে' : 'ঢাকার বাইরে'}</div>
+                                                <button
+                                                    onClick={async () => {
+                                                        await navigator.clipboard.writeText(`${order.name} | ${order.phone} | ${order.address} | Total: ৳${order.total}`);
+                                                        alert('Copied to clipboard!');
+                                                    }}
+                                                    className="text-gray-400 hover:text-gray-700"
+                                                    title="Copy for Pathao/RedX"
+                                                >
+                                                    <Copy size={12} />
+                                                </button>
+                                            </div>
                                         </div>
 
                                         <div className="flex justify-between items-center mb-4 pb-3 sm:pb-4 border-b border-gray-100">
@@ -510,6 +583,7 @@ export default function AdminDashboard() {
                                                     className="border-2 border-gray-200 pl-2 sm:pl-3 pr-6 sm:pr-8 py-1 sm:py-1.5 rounded-lg bg-white outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 cursor-pointer text-gray-700 font-semibold shadow-sm text-xs sm:text-sm"
                                                 >
                                                     <option value="Pending">🕒 Pending</option>
+                                                    <option value="Confirmed">👍 Confirmed</option>
                                                     <option value="Shipped">🚚 Shipped</option>
                                                     <option value="Delivered">✅ Delivered</option>
                                                     <option value="Cancelled">❌ Cancelled</option>
