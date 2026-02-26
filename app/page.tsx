@@ -17,10 +17,10 @@ const toBangla = (num: number | string): string => {
 
 /* ─── Data ─── */
 const products = [
-    { id: '250g', name: '২৫০ গ্রাম', price: 180, perGram: 0.72, save: 0, popular: false, best: false },
-    { id: '500g', name: '৫০০ গ্রাম', price: 330, perGram: 0.66, save: 8, popular: true, best: false },
-    { id: '1kg', name: '১ কেজি', price: 620, perGram: 0.62, save: 14, popular: false, best: false },
-    { id: '2kg', name: '২ কেজি', price: 1150, perGram: 0.58, save: 20, popular: false, best: true },
+    { id: '250g', name: '২৫০ গ্রাম', price: 300, perGram: 1.20, save: 0, popular: false, best: false },
+    { id: '700g', name: '৭০০ গ্রাম', price: 950, perGram: 1.36, save: 0, popular: true, best: false },
+    { id: '1kg', name: '১ কেজি', price: 1200, perGram: 1.20, save: 0, popular: false, best: false },
+    { id: '2kg', name: '২ কেজি', price: 2350, perGram: 1.18, save: 2, popular: false, best: true },
 ];
 
 const features = [
