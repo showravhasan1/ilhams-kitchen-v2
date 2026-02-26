@@ -22,7 +22,7 @@ export const metadata: Metadata = {
         description: "১০০% খাঁটি মচমচে পেঁয়াজ বেরেস্তা। ক্যাশ অন ডেলিভারি। অর্ডার করুন!",
         images: [
             {
-                url: '/og-image.png',
+                url: '/og-preview.png',
                 width: 1200,
                 height: 630,
                 alt: "ILHAM's Kitchen প্রিমিয়াম পেঁয়াজ বেরেস্তা",
@@ -33,7 +33,7 @@ export const metadata: Metadata = {
         card: 'summary_large_image',
         title: "ILHAM's Kitchen | প্রিমিয়াম পেঁয়াজ বেরেস্তা",
         description: "১০০% খাঁটি মচমচে পেঁয়াজ বেরেস্তা। ক্যাশ অন ডেলিভারি। অর্ডার করুন!",
-        images: ['/og-image.png'],
+        images: ['/og-preview.png'],
     },
     robots: {
         index: true,
