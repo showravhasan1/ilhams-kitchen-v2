@@ -6,8 +6,14 @@ import { useRouter } from 'next/navigation';
 import {
     CheckCircle2, Truck, Star, Phone, ShoppingCart, Award, ShieldCheck,
     HeartPulse, Clock, MessageCircle, ChevronDown, ChevronUp, Leaf,
-    Flame, Users, Timer, Sparkles, UtensilsCrossed, Copy, Package
+    Flame, Users, Timer, Sparkles, UtensilsCrossed, Copy, Package, Heart
 } from 'lucide-react';
+
+/* ─── Bangla Numeral Converter ─── */
+const banglaDigits = ['০', '১', '২', '৩', '৪', '৫', '৬', '৭', '৮', '৯'];
+const toBangla = (num: number | string): string => {
+    return String(num).replace(/[0-9]/g, (d) => banglaDigits[parseInt(d)]);
+};
 
 /* ─── Data ─── */
 const products = [
@@ -23,6 +29,7 @@ const features = [
     { icon: Leaf, title: 'কেমিক্যাল ফ্রি', desc: 'কোনো প্রিজার্ভেটিভ বা আর্টিফিশিয়াল কালার নেই' },
     { icon: ShieldCheck, title: 'দীর্ঘ মেয়াদ', desc: 'সঠিকভাবে সংরক্ষণ করলে ৩ মাস পর্যন্ত ফ্রেশ' },
     { icon: UtensilsCrossed, title: 'ভার্সেটাইল ব্যবহার', desc: 'বিরিয়ানি, তেহারি, পোলাও, হালিম, এমনকি সালাদেও' },
+    { icon: Heart, title: 'ঘরোয়া স্বাদ', desc: 'সম্পূর্ণ ঘরোয়া পরিবেশে হাতে তৈরি, ভালোবাসা দিয়ে রান্না' },
 ];
 
 const usages = [
@@ -141,7 +148,7 @@ export default function Home() {
 
             {/* ━━━ Header ━━━ */}
             <header className="bg-white/95 backdrop-blur-md shadow-sm sticky top-0 z-40 border-b border-gray-100">
-                <div className="max-w-5xl mx-auto px-4 py-2.5 flex justify-between items-center">
+                <div className="max-w-5xl mx-auto px-4 py-2.5 flex justify-center md:justify-between items-center">
                     <div className="flex items-center gap-2.5">
                         <Image
                             src="/brand-logo.jpeg"
@@ -241,7 +248,7 @@ export default function Home() {
                         <div className="w-16 h-1 bg-gradient-to-r from-orange-400 to-orange-600 mx-auto rounded-full mt-4"></div>
                     </div>
 
-                    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4">
+                    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4">
                         {features.map((f, i) => (
                             <div key={i} className="bg-white p-4 rounded-2xl border border-orange-100 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 text-center group">
                                 <div className="w-12 h-12 bg-gradient-to-br from-orange-100 to-orange-50 rounded-xl flex items-center justify-center mx-auto mb-3 group-hover:scale-110 transition-transform">
@@ -263,7 +270,16 @@ export default function Home() {
                         <p className="text-gray-500 text-sm">এয়ারটাইট প্যাকেজিংয়ে আসে যাতে মচমচে ভাব দীর্ঘদিন থাকে</p>
                     </div>
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-                        <Image src="/images/WhatsApp Image 2026-02-22 at 02.20.40.jpeg" alt="প্রিমিয়াম পেয়াজ বেরেস্তা" width={300} height={300} className="rounded-2xl shadow-md w-full h-40 sm:h-48 object-cover hover:scale-[1.03] transition duration-300 border border-orange-100" />
+                        <div className="relative">
+                            <Image src="/images/WhatsApp Image 2026-02-22 at 02.20.40.jpeg" alt="প্রিমিয়াম পেয়াজ বেরেস্তা" width={300} height={300} className="rounded-2xl shadow-md w-full h-40 sm:h-48 object-cover hover:scale-[1.03] transition duration-300 border border-orange-100" />
+                            <div className="absolute top-2 right-2 bg-white/95 backdrop-blur-sm px-2.5 py-1.5 rounded-xl shadow-lg flex items-center gap-1.5 z-10">
+                                <div className="bg-green-100 p-1 rounded-full"><CheckCircle2 size={14} className="text-green-600" /></div>
+                                <div className="leading-none">
+                                    <div className="font-black text-gray-900 text-[11px]">১০০% খাঁটি</div>
+                                    <div className="text-[8px] text-gray-500 font-medium">প্রাকৃতিক উপাদান</div>
+                                </div>
+                            </div>
+                        </div>
                         <Image src="/images/WhatsApp Image 2026-02-22 at 02.21.11.jpeg" alt="গোল্ডেন ফ্রাইড বেরেস্তা" width={300} height={300} className="rounded-2xl shadow-md w-full h-40 sm:h-48 object-cover hover:scale-[1.03] transition duration-300 border border-orange-100" />
                         <Image src="/images/WhatsApp Image 2026-02-22 at 02.21.35.jpeg" alt="ক্রিসপি বেরেস্তা ক্লোজআপ" width={300} height={300} className="rounded-2xl shadow-md w-full h-40 sm:h-48 object-cover hover:scale-[1.03] transition duration-300 border border-orange-100" />
                         <Image src="/images/h.jpeg" alt="প্যাকেজড বেরেস্তা" width={300} height={300} className="rounded-2xl shadow-md w-full h-40 sm:h-48 object-cover bg-white hover:scale-[1.03] transition duration-300 border border-orange-100" />
@@ -370,15 +386,15 @@ export default function Home() {
                             )}
 
                             <div className="font-black text-gray-900 text-lg mt-1">{p.name}</div>
-                            <div className="text-orange-600 font-black text-2xl my-1">৳{p.price}</div>
+                            <div className="text-orange-600 font-black text-2xl my-1 font-bangla">৳{toBangla(p.price)}</div>
 
                             {/* Per-gram cost */}
-                            <div className="text-[11px] text-gray-500">৳{p.perGram}/g</div>
+                            <div className="text-[11px] text-gray-500 font-bangla">৳{toBangla(p.perGram)}/g</div>
 
                             {/* Savings Badge */}
                             {p.save > 0 && (
                                 <div className="mt-2 inline-block text-[10px] font-bold text-green-700 bg-green-100 px-2 py-0.5 rounded-full">
-                                    {p.save}% সেভ
+                                    {toBangla(p.save)}% সেভ
                                 </div>
                             )}
                         </button>
@@ -472,17 +488,17 @@ export default function Home() {
                             {/* Order Summary */}
                             <div className="bg-gray-50 p-4 rounded-2xl border border-gray-200 space-y-2">
                                 <div className="flex justify-between text-sm text-gray-600">
-                                    <span>সাবটোটাল ({quantity}x {selectedProduct.name})</span>
-                                    <span className="font-bold">৳{subtotal}</span>
+                                    <span>সাবটোটাল ({toBangla(quantity)}x {selectedProduct.name})</span>
+                                    <span className="font-bold font-bangla">৳{toBangla(subtotal)}</span>
                                 </div>
                                 <div className="flex justify-between text-sm text-gray-600">
                                     <span>ডেলিভারি চার্জ ({zone === 'Dhaka' ? 'ঢাকা' : 'ঢাকার বাইরে'})</span>
-                                    <span className="font-bold">৳{deliveryCharge}</span>
+                                    <span className="font-bold font-bangla">৳{toBangla(deliveryCharge)}</span>
                                 </div>
                                 <div className="border-t border-dashed border-gray-300 my-2"></div>
                                 <div className="flex justify-between items-center">
                                     <span className="font-black text-gray-900">মোট বিল</span>
-                                    <span className="font-black text-2xl text-orange-600">৳{total}</span>
+                                    <span className="font-black text-2xl text-orange-600 font-bangla">৳{toBangla(total)}</span>
                                 </div>
                             </div>
 
@@ -496,7 +512,7 @@ export default function Home() {
                                     }`}
                             >
                                 <ShoppingCart size={22} />
-                                {isSubmitting ? 'প্রসেসিং হচ্ছে...' : `অর্ডার কনফার্ম করুন (৳${total})`}
+                                {isSubmitting ? 'প্রসেসিং হচ্ছে...' : <span>অর্ডার কনফার্ম করুন (<span className="font-bangla">৳{toBangla(total)}</span>)</span>}
                             </button>
 
                             {/* Trust Assurance */}
@@ -577,7 +593,7 @@ export default function Home() {
                 <div className="flex items-center gap-3">
                     <div className="shrink-0">
                         <div className="text-[10px] text-gray-500 font-medium">মোট বিল</div>
-                        <div className="text-lg font-black text-orange-600">৳{total}</div>
+                        <div className="text-lg font-black text-orange-600 font-bangla">৳{toBangla(total)}</div>
                     </div>
                     <button onClick={scrollToOrder} className="flex-1 bg-gradient-to-r from-orange-600 to-orange-500 text-white font-black text-base py-3.5 rounded-xl shadow-lg flex items-center justify-center gap-2 active:scale-[0.98] transition">
                         <ShoppingCart size={18} /> এখনই অর্ডার করুন
