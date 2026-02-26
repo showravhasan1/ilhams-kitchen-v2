@@ -9,12 +9,35 @@ const hindSiliguri = Hind_Siliguri({
 });
 
 export const metadata: Metadata = {
-    title: "ILHAM's Kitchen | Premium Peyaj Beresta",
-    description: "প্রিমিয়াম ক্রিসপি পেয়াজ বেরেস্তা এখন সুলভ মূল্যে! ১০০% খাঁটি ও ক্রিসপি। অর্ডার করুন এখনই।",
+    metadataBase: new URL('https://www.ilhamskitchen.com'),
+    title: "ILHAM's Kitchen | প্রিমিয়াম পেঁয়াজ বেরেস্তা",
+    description: "১০০% খাঁটি, হাতে তৈরি মচমচে পেঁয়াজ বেরেস্তা। কেমিক্যাল ফ্রি, এয়ারটাইট প্যাকেজিং। ক্যাশ অন ডেলিভারি। ঢাকায় ২৪ ঘন্টায় ডেলিভারি। এখনই অর্ডার করুন!",
+    keywords: ['পেঁয়াজ বেরেস্তা', 'peyaj beresta', 'fried onion', 'ILHAM Kitchen', 'ইলহামস কিচেন', 'বেরেস্তা অর্ডার', 'crispy onion Bangladesh'],
     openGraph: {
-        title: "ILHAM's Kitchen | Premium Peyaj Beresta",
-        description: "প্রিমিয়াম ক্রিসপি পেয়াজ বেরেস্তা এখন সুলভ মূল্যে! ১০০% খাঁটি ও ক্রিসপি।",
-        images: [{ url: '/images/h.jpeg' }],
+        type: 'website',
+        locale: 'bn_BD',
+        url: 'https://www.ilhamskitchen.com',
+        siteName: "ILHAM's Kitchen",
+        title: "ILHAM's Kitchen | প্রিমিয়াম পেঁয়াজ বেরেস্তা",
+        description: "১০০% খাঁটি, হাতে তৈরি মচমচে পেঁয়াজ বেরেস্তা। কেমিক্যাল ফ্রি। ক্যাশ অন ডেলিভারি। এখনই অর্ডার করুন!",
+        images: [
+            {
+                url: '/og-image.png',
+                width: 1200,
+                height: 630,
+                alt: "ILHAM's Kitchen প্রিমিয়াম পেঁয়াজ বেরেস্তা",
+            },
+        ],
+    },
+    twitter: {
+        card: 'summary_large_image',
+        title: "ILHAM's Kitchen | প্রিমিয়াম পেঁয়াজ বেরেস্তা",
+        description: "১০০% খাঁটি, হাতে তৈরি মচমচে পেঁয়াজ বেরেস্তা। ক্যাশ অন ডেলিভারি। এখনই অর্ডার করুন!",
+        images: ['/og-image.png'],
+    },
+    robots: {
+        index: true,
+        follow: true,
     },
 };
 
