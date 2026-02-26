@@ -19,7 +19,7 @@ export const metadata: Metadata = {
         url: 'https://www.ilhamskitchen.com',
         siteName: "ILHAM's Kitchen",
         title: "ILHAM's Kitchen | প্রিমিয়াম পেঁয়াজ বেরেস্তা",
-        description: "১০০% খাঁটি, হাতে তৈরি মচমচে পেঁয়াজ বেরেস্তা। কেমিক্যাল ফ্রি। ক্যাশ অন ডেলিভারি। এখনই অর্ডার করুন!",
+        description: "১০০% খাঁটি মচমচে পেঁয়াজ বেরেস্তা। ক্যাশ অন ডেলিভারি। অর্ডার করুন!",
         images: [
             {
                 url: '/og-image.png',
@@ -32,7 +32,7 @@ export const metadata: Metadata = {
     twitter: {
         card: 'summary_large_image',
         title: "ILHAM's Kitchen | প্রিমিয়াম পেঁয়াজ বেরেস্তা",
-        description: "১০০% খাঁটি, হাতে তৈরি মচমচে পেঁয়াজ বেরেস্তা। ক্যাশ অন ডেলিভারি। এখনই অর্ডার করুন!",
+        description: "১০০% খাঁটি মচমচে পেঁয়াজ বেরেস্তা। ক্যাশ অন ডেলিভারি। অর্ডার করুন!",
         images: ['/og-image.png'],
     },
     robots: {
