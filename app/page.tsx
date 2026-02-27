@@ -109,18 +109,18 @@ export default function Home() {
                     total
                 })
             });
-            if (res.ok) {
-                const data = await res.json();
+            const data = await res.json();
+            if (res.ok && data.success) {
                 if (typeof window !== 'undefined' && (window as any).fbq) {
                     (window as any).fbq('track', 'Purchase', { currency: 'BDT', value: total });
                 }
-                if (data.success && data.order) {
+                if (data.order) {
                     router.push(`/thank-you?id=${data.order.id}`);
                 } else {
                     router.push('/thank-you');
                 }
             } else {
-                alert('কোথাও একটা সমস্যা হয়েছে। দয়া করে আবার চেষ্টা করুন।');
+                alert(data.error || 'কোথাও একটা সমস্যা হয়েছে। দয়া করে আবার চেষ্টা করুন।');
             }
         } catch {
             alert('দুঃখিত, আপনার অর্ডারটি গ্রহণ করা সম্ভব হয়নি।');
@@ -440,8 +440,10 @@ export default function Home() {
                                 <input
                                     required
                                     type="tel"
+                                    pattern="01[3-9][0-9]{8}"
+                                    maxLength={11}
                                     value={formData.phone}
-                                    onChange={e => setFormData({ ...formData, phone: e.target.value })}
+                                    onChange={e => setFormData({ ...formData, phone: e.target.value.replace(/[^0-9]/g, '') })}
                                     className="w-full px-4 py-3.5 rounded-xl border border-gray-300 focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none transition bg-gray-50 focus:bg-white shadow-sm text-base"
                                     placeholder="01XXXXXXXXX"
                                 />
