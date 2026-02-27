@@ -17,11 +17,11 @@ const toBangla = (num: number | string): string => {
 
 /* ─── Data ─── */
 const products = [
-    { id: '250g', name: '২৫০ গ্রাম', price: 300, perGram: 1.20, save: 0, popular: false, best: false },
-    { id: '500g', name: '৫০০ গ্রাম', price: 600, perGram: 1.20, save: 0, popular: false, best: false },
-    { id: '700g', name: '৭০০ গ্রাম', price: 950, perGram: 1.36, save: 0, popular: true, best: false },
-    { id: '1kg', name: '১ কেজি', price: 1200, perGram: 1.20, save: 0, popular: false, best: false },
-    { id: '2kg', name: '২ কেজি', price: 2350, perGram: 1.18, save: 2, popular: false, best: true },
+    { id: '250g', name: '২৫০ গ্রাম', price: 300, originalPrice: 335, perGram: 1.20, save: 0, popular: false, best: false },
+    { id: '500g', name: '৫০০ গ্রাম', price: 600, originalPrice: 670, perGram: 1.20, save: 0, popular: false, best: false },
+    { id: '700g', name: '৭০০ গ্রাম', price: 950, originalPrice: 1055, perGram: 1.36, save: 0, popular: true, best: false },
+    { id: '1kg', name: '১ কেজি', price: 1200, originalPrice: 1335, perGram: 1.20, save: 0, popular: false, best: false },
+    { id: '2kg', name: '২ কেজি', price: 2350, originalPrice: 2610, perGram: 1.18, save: 2, popular: false, best: true },
 ];
 
 const features = [
@@ -197,7 +197,7 @@ export default function Home() {
                     </div>
 
                     <div className="inline-flex bg-red-500/90 text-white px-4 py-1.5 rounded-full text-sm font-bold mb-5 items-center gap-2 backdrop-blur-sm shadow-lg">
-                        <Flame size={16} className="animate-pulse" /> সীমিত সময়ের অফার!
+                        <Flame size={16} className="animate-pulse" /> সব প্যাকেজে ১০% ছাড়!
                     </div>
 
                     <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-white mb-5 leading-tight drop-shadow-lg">
@@ -387,10 +387,11 @@ export default function Home() {
                             )}
 
                             <div className="font-black text-gray-900 text-lg mt-1">{p.name}</div>
-                            <div className="text-orange-600 font-black text-2xl my-1 font-bangla">৳{toBangla(p.price)}</div>
-
-                            {/* Per-gram cost */}
-                            <div className="text-[11px] text-gray-500 font-bangla">৳{toBangla(p.perGram)}/g</div>
+                            <div className="text-gray-400 text-sm line-through font-bangla">৳{toBangla(p.originalPrice)}</div>
+                            <div className="text-orange-600 font-black text-2xl font-bangla">৳{toBangla(p.price)}</div>
+                            <div className="mt-1 inline-block text-[10px] font-bold text-red-700 bg-red-100 px-2 py-0.5 rounded-full">
+                                ১০% ছাড়
+                            </div>
 
                             {/* Savings Badge */}
                             {p.save > 0 && (
