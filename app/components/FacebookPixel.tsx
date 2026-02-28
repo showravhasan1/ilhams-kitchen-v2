@@ -2,22 +2,27 @@
 
 import { usePathname, useSearchParams } from 'next/navigation';
 import Script from 'next/script';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef } from 'react';
 
 const FB_PIXEL_ID = '2700364103657577';
 
 export const FacebookPixel = () => {
     const pathname = usePathname();
     const searchParams = useSearchParams();
-    const [loaded, setLoaded] = useState(false);
+    const isFirstLoad = useRef(true);
 
     useEffect(() => {
-        if (!loaded) return;
-        // This fires 'PageView' on every route change manually since Next.js is an SPA
+        // Skip the first load since the inline script handles it
+        if (isFirstLoad.current) {
+            isFirstLoad.current = false;
+            return;
+        }
+
+        // Fire PageView on subsequent client-side route changes
         if (typeof window !== 'undefined' && (window as any).fbq) {
             (window as any).fbq('track', 'PageView');
         }
-    }, [pathname, searchParams, loaded]);
+    }, [pathname, searchParams]);
 
     return (
         <Script
@@ -37,7 +42,6 @@ export const FacebookPixel = () => {
                     fbq('track', 'PageView');
                 `,
             }}
-            onLoad={() => setLoaded(true)}
         />
     );
 };
