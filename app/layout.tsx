@@ -49,8 +49,12 @@ export default function RootLayout({
     return (
         <html lang="bn" className="scroll-smooth" suppressHydrationWarning>
             <head>
-                {/* Facebook Pixel Code Example */}
+                {/* Preload LCP hero image */}
+                <link rel="preload" href="/images/hero.webp" as="image" type="image/webp" />
+
+                {/* Facebook Pixel Code (deferred) */}
                 <script
+                    defer
                     dangerouslySetInnerHTML={{
                         __html: `
               !function(f,b,e,v,n,t,s)
