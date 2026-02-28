@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import {
     CheckCircle2, ShoppingCart, ChevronDown, ChevronUp, Package, MessageCircle
@@ -11,6 +11,13 @@ const banglaDigits = ['০', '১', '২', '৩', '৪', '৫', '৬', '৭', '�
 const toBangla = (num: number | string): string => {
     return String(num).replace(/[0-9]/g, (d) => banglaDigits[parseInt(d)]);
 };
+
+/* ─── FB Cookie Helper ─── */
+function getCookie(name: string): string {
+    if (typeof document === 'undefined') return '';
+    const match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+    return match ? decodeURIComponent(match[2]) : '';
+}
 
 /* ─── Data ─── */
 const products = [
@@ -42,6 +49,33 @@ export default function InteractiveSection() {
     const subtotal = selectedProduct.price * quantity;
     const total = subtotal + deliveryCharge;
 
+    // Send ViewContent + InitiateCheckout events server-side on mount
+    useEffect(() => {
+        const fbc = getCookie('_fbc');
+        const fbp = getCookie('_fbp');
+        const url = window.location.href;
+
+        // ViewContent (server-side)
+        fetch('/api/fb-events', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ eventName: 'ViewContent', sourceUrl: url, fbc, fbp }),
+        }).catch(() => { });
+
+        // InitiateCheckout (server-side, since order form is visible)
+        fetch('/api/fb-events', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ eventName: 'InitiateCheckout', sourceUrl: url, fbc, fbp }),
+        }).catch(() => { });
+
+        // Browser-side events (for dedup)
+        if (typeof window !== 'undefined' && (window as any).fbq) {
+            (window as any).fbq('track', 'ViewContent');
+            (window as any).fbq('track', 'InitiateCheckout');
+        }
+    }, []);
+
     const scrollToOrder = () => {
         orderRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
     };
@@ -50,6 +84,9 @@ export default function InteractiveSection() {
         e.preventDefault();
         setIsSubmitting(true);
         try {
+            const fbc = getCookie('_fbc');
+            const fbp = getCookie('_fbp');
+
             const res = await fetch('/api/checkout', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -60,13 +97,19 @@ export default function InteractiveSection() {
                     zone,
                     subtotal,
                     shipping: deliveryCharge,
-                    total
+                    total,
+                    fbc,
+                    fbp,
                 })
             });
             const data = await res.json();
             if (res.ok && data.success) {
+                // Browser-side Purchase with same eventID for deduplication
                 if (typeof window !== 'undefined' && (window as any).fbq) {
-                    (window as any).fbq('track', 'Purchase', { currency: 'BDT', value: total });
+                    (window as any).fbq('track', 'Purchase', {
+                        currency: 'BDT',
+                        value: total,
+                    }, { eventID: data.eventId });
                 }
                 if (data.order) {
                     router.push(`/thank-you?id=${data.order.id}`);

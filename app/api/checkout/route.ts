@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
+import { sendFBEvent, generateEventId } from '@/lib/facebook';
 
 /* ─── Validation Helpers ─── */
 
@@ -46,10 +47,11 @@ export async function POST(req: Request) {
         }
 
         // ── 3. Create Order ──
+        const eventId = generateEventId();
         const order = await prisma.order.create({
             data: {
                 name: data.name,
-                phone: phone,  // Store normalized phone
+                phone: phone,
                 address: data.address,
                 zone: data.zone,
                 item: data.item,
@@ -61,9 +63,38 @@ export async function POST(req: Request) {
             }
         });
 
-        return NextResponse.json({ success: true, order });
+        // ── 4. Send Facebook CAPI Purchase Event (non-blocking) ──
+        const clientIp = req.headers.get('x-forwarded-for')?.split(',')[0]?.trim()
+            || req.headers.get('x-real-ip')
+            || '';
+        const userAgent = req.headers.get('user-agent') || '';
+
+        sendFBEvent({
+            eventName: 'Purchase',
+            eventId,
+            sourceUrl: 'https://www.ilhamskitchen.com/',
+            userData: {
+                phone,
+                firstName: data.name?.split(' ')[0] || '',
+                clientIp,
+                userAgent,
+                fbc: data.fbc || '',
+                fbp: data.fbp || '',
+            },
+            customData: {
+                currency: 'BDT',
+                value: data.total,
+                content_name: data.item,
+                content_type: 'product',
+                num_items: data.quantity,
+                order_id: order.id,
+            },
+        }).catch(err => console.error('[FB CAPI] Background error:', err));
+
+        return NextResponse.json({ success: true, order, eventId });
     } catch (error: any) {
         console.error('Checkout error:', error);
         return NextResponse.json({ success: false, error: 'দুঃখিত, আবার চেষ্টা করুন।', details: error.message }, { status: 500 });
     }
 }
+
