@@ -80,12 +80,13 @@ export default function Home() {
             {/* ━━━ Hero Section ━━━ */}
             <section className="relative overflow-hidden">
                 <div className="absolute inset-0 z-0">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
+                    <Image
                         src="/images/hero.webp"
                         alt="Premium Peyaj Beresta"
-                        fetchPriority="high"
-                        className="absolute inset-0 w-full h-full object-cover"
+                        fill
+                        priority
+                        unoptimized
+                        className="object-cover"
                     />
                     <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-black/80"></div>
                 </div>

@@ -48,9 +48,7 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="bn" className="scroll-smooth" suppressHydrationWarning>
-            <head>
-                <link rel="preload" href="/images/hero.webp" as="image" type="image/webp" fetchPriority="high" />
-            </head>
+            <head />
 
             <body className={`${hindSiliguri.className} antialiased bg-gray-50 text-gray-900`} suppressHydrationWarning>
                 {children}
