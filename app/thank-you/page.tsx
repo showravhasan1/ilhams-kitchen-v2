@@ -10,8 +10,9 @@ const toBangla = (num: number | string): string => {
     return String(num).replace(/[0-9]/g, (d) => banglaDigits[parseInt(d)]);
 };
 
-async function ThankYouContent({ searchParams }: { searchParams: { id?: string } }) {
-    const orderId = searchParams?.id;
+async function ThankYouContent({ searchParams }: { searchParams: Promise<{ id?: string }> }) {
+    const params = await searchParams;
+    const orderId = params?.id;
     let order = null;
 
     if (orderId) {
@@ -151,7 +152,7 @@ async function ThankYouContent({ searchParams }: { searchParams: { id?: string }
     );
 }
 
-export default function ThankYouPage({ searchParams }: { searchParams: { id?: string } }) {
+export default async function ThankYouPage({ searchParams }: { searchParams: Promise<{ id?: string }> }) {
     return (
         <Suspense fallback={<div className="min-h-screen flex items-center justify-center bg-gray-50"><div className="animate-spin rounded-full h-12 w-12 border-b-4 border-orange-500"></div></div>}>
             <ThankYouContent searchParams={searchParams} />
