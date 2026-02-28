@@ -1,9 +1,18 @@
 import Image from 'next/image';
+import dynamic from 'next/dynamic';
 import {
     CheckCircle2, Truck, Star, Phone, ShoppingCart, Award, ShieldCheck,
     HeartPulse, Leaf, Flame, Users, Timer, Sparkles, UtensilsCrossed, Heart
 } from 'lucide-react';
-import InteractiveSection from './components/InteractiveSection';
+
+const InteractiveSection = dynamic(() => import('./components/InteractiveSection'), {
+    ssr: false,
+    loading: () => (
+        <div className="py-12 px-4 max-w-5xl mx-auto text-center">
+            <div className="animate-pulse bg-gray-200 h-96 rounded-3xl"></div>
+        </div>
+    ),
+});
 
 /* ─── Bangla Numeral Converter ─── */
 const banglaDigits = ['০', '১', '২', '৩', '৪', '৫', '৬', '৭', '৮', '৯'];
