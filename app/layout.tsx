@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { Hind_Siliguri } from "next/font/google";
-import Script from "next/script";
 import "./globals.css";
 
 const hindSiliguri = Hind_Siliguri({
@@ -51,15 +50,7 @@ export default function RootLayout({
         <html lang="bn" className="scroll-smooth" suppressHydrationWarning>
             <head>
                 <link rel="preload" href="/images/hero.webp" as="image" type="image/webp" />
-            </head>
-
-            <body className={`${hindSiliguri.className} antialiased bg-gray-50 text-gray-900`} suppressHydrationWarning>
-                {children}
-
-                {/* Meta Pixel (loads after page is interactive, no PageSpeed impact) */}
-                <Script
-                    id="fb-pixel"
-                    strategy="afterInteractive"
+                <script
                     dangerouslySetInnerHTML={{
                         __html: `
                             !function(f,b,e,v,n,t,s)
@@ -75,6 +66,11 @@ export default function RootLayout({
                         `,
                     }}
                 />
+            </head>
+
+            <body className={`${hindSiliguri.className} antialiased bg-gray-50 text-gray-900`} suppressHydrationWarning>
+                {children}
+
                 <noscript>
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
