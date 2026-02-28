@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Hind_Siliguri } from "next/font/google";
 import { Suspense } from "react";
+import Script from "next/script";
 import { FacebookPixel } from "./components/FacebookPixel";
 import "./globals.css";
 
@@ -61,6 +62,25 @@ export default function RootLayout({
         <html lang="bn" className="scroll-smooth" suppressHydrationWarning>
             <head>
                 <link rel="preload" href="/images/hero.webp" as="image" type="image/webp" />
+                {/* Meta Pixel - beforeInteractive loads in document head */}
+                <Script
+                    id="fb-pixel-init"
+                    strategy="beforeInteractive"
+                    dangerouslySetInnerHTML={{
+                        __html: `
+                                !function(f,b,e,v,n,t,s)
+                                {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+                                n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+                                if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+                                n.queue=[];t=b.createElement(e);t.async=!0;
+                                t.src=v;s=b.getElementsByTagName(e)[0];
+                                s.parentNode.insertBefore(t,s)}(window, document,'script',
+                                'https://connect.facebook.net/en_US/fbevents.js');
+                                fbq('init', '2700364103657577');
+                                fbq('track', 'PageView');
+                            `,
+                    }}
+                />
             </head>
 
             <body className={`${hindSiliguri.className} antialiased bg-gray-50 text-gray-900`} suppressHydrationWarning>
