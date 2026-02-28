@@ -441,9 +441,11 @@ export default function Home() {
                                     required
                                     type="tel"
                                     pattern="01[3-9][0-9]{8}"
+                                    minLength={11}
                                     maxLength={11}
+                                    title="সঠিক ১১ ডিজিটের মোবাইল নম্বর দিন (যেমন: 01712345678)"
                                     value={formData.phone}
-                                    onChange={e => setFormData({ ...formData, phone: e.target.value.replace(/[^0-9]/g, '') })}
+                                    onChange={e => setFormData({ ...formData, phone: e.target.value.replace(/[^0-9]/g, '').slice(0, 11) })}
                                     className="w-full px-4 py-3.5 rounded-xl border border-gray-300 focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none transition bg-gray-50 focus:bg-white shadow-sm text-base"
                                     placeholder="01XXXXXXXXX"
                                 />

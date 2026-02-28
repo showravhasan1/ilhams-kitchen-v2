@@ -20,9 +20,9 @@ export async function POST(req: Request) {
 
         // ── 1. Phone Validation ──
         const phone = normalizePhone(data.phone || '');
-        if (!BD_PHONE_REGEX.test(phone)) {
+        if (phone.length !== 11 || !BD_PHONE_REGEX.test(phone)) {
             return NextResponse.json(
-                { success: false, error: 'সঠিক মোবাইল নম্বর দিন (যেমন: 01712345678)' },
+                { success: false, error: 'সঠিক ১১ ডিজিটের মোবাইল নম্বর দিন (যেমন: 01712345678)' },
                 { status: 400 }
             );
         }
