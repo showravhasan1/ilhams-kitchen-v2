@@ -68,6 +68,9 @@ export async function POST(req: Request) {
             || req.headers.get('x-real-ip')
             || '';
         const userAgent = req.headers.get('user-agent') || '';
+        const nameParts = (data.name || '').trim().split(' ');
+        const firstName = nameParts[0] || '';
+        const lastName = nameParts.length > 1 ? nameParts[nameParts.length - 1] : '';
 
         sendFBEvent({
             eventName: 'Purchase',
@@ -75,11 +78,13 @@ export async function POST(req: Request) {
             sourceUrl: 'https://www.ilhamskitchen.com/',
             userData: {
                 phone,
-                firstName: data.name?.split(' ')[0] || '',
+                firstName,
+                lastName,
                 clientIp,
                 userAgent,
                 fbc: data.fbc || '',
                 fbp: data.fbp || '',
+                externalId: phone, // Use phone as external_id for cross-device matching
             },
             customData: {
                 currency: 'BDT',
