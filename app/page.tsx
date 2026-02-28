@@ -181,7 +181,7 @@ export default function Home() {
                         className="object-cover"
                         priority
                         sizes="100vw"
-                        quality={80}
+                        quality={60}
                     />
                     <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-black/80"></div>
                 </div>
@@ -274,7 +274,7 @@ export default function Home() {
                     </div>
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
                         <div className="relative">
-                            <Image src="/images/WhatsApp Image 2026-02-22 at 02.20.40.webp" alt="প্রিমিয়াম পেয়াজ বেরেস্তা" width={300} height={300} loading="lazy" className="rounded-2xl shadow-md w-full h-40 sm:h-48 object-cover hover:scale-[1.03] transition duration-300 border border-orange-100" />
+                            <Image src="/images/WhatsApp Image 2026-02-22 at 02.20.40.webp" alt="প্রিমিয়াম পেয়াজ বেরেস্তা" width={300} height={300} loading="lazy" sizes="(max-width: 768px) 50vw, 25vw" quality={65} className="rounded-2xl shadow-md w-full h-40 sm:h-48 object-cover hover:scale-[1.03] transition duration-300 border border-orange-100" />
                             <div className="absolute top-2 right-2 bg-white/95 backdrop-blur-sm px-2.5 py-1.5 rounded-xl shadow-lg flex items-center gap-1.5 z-10">
                                 <div className="bg-green-100 p-1 rounded-full"><CheckCircle2 size={14} className="text-green-600" /></div>
                                 <div className="leading-none">
@@ -283,9 +283,9 @@ export default function Home() {
                                 </div>
                             </div>
                         </div>
-                        <Image src="/images/WhatsApp Image 2026-02-22 at 02.21.11.webp" alt="গোল্ডেন ফ্রাইড বেরেস্তা" width={300} height={300} loading="lazy" className="rounded-2xl shadow-md w-full h-40 sm:h-48 object-cover hover:scale-[1.03] transition duration-300 border border-orange-100" />
-                        <Image src="/images/WhatsApp Image 2026-02-22 at 02.21.35.webp" alt="ক্রিসপি বেরেস্তা ক্লোজআপ" width={300} height={300} loading="lazy" className="rounded-2xl shadow-md w-full h-40 sm:h-48 object-cover hover:scale-[1.03] transition duration-300 border border-orange-100" />
-                        <Image src="/images/h.webp" alt="প্যাকেজড বেরেস্তা" width={300} height={300} loading="lazy" className="rounded-2xl shadow-md w-full h-40 sm:h-48 object-cover bg-white hover:scale-[1.03] transition duration-300 border border-orange-100" />
+                        <Image src="/images/WhatsApp Image 2026-02-22 at 02.21.11.webp" alt="গোল্ডেন ফ্রাইড বেরেস্তা" width={300} height={300} loading="lazy" sizes="(max-width: 768px) 50vw, 25vw" quality={65} className="rounded-2xl shadow-md w-full h-40 sm:h-48 object-cover hover:scale-[1.03] transition duration-300 border border-orange-100" />
+                        <Image src="/images/WhatsApp Image 2026-02-22 at 02.21.35.webp" alt="ক্রিসপি বেরেস্তা ক্লোজআপ" width={300} height={300} loading="lazy" sizes="(max-width: 768px) 50vw, 25vw" quality={65} className="rounded-2xl shadow-md w-full h-40 sm:h-48 object-cover hover:scale-[1.03] transition duration-300 border border-orange-100" />
+                        <Image src="/images/h.webp" alt="প্যাকেজড বেরেস্তা" width={300} height={300} loading="lazy" sizes="(max-width: 768px) 50vw, 25vw" quality={65} className="rounded-2xl shadow-md w-full h-40 sm:h-48 object-cover bg-white hover:scale-[1.03] transition duration-300 border border-orange-100" />
                     </div>
                 </div>
             </section>

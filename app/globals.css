@@ -69,21 +69,24 @@ body {
   animation: fade-in 0.6s ease-out both;
 }
 
-/* Soft pulse for CTA buttons */
+/* Soft pulse for CTA buttons (composited) */
 @keyframes pulse-soft {
 
   0%,
   100% {
-    box-shadow: 0 0 0 0 rgba(234, 88, 12, 0.4);
+    transform: scale(1);
+    opacity: 1;
   }
 
   50% {
-    box-shadow: 0 0 0 12px rgba(234, 88, 12, 0);
+    transform: scale(1.03);
+    opacity: 0.92;
   }
 }
 
 .animate-pulse-soft {
   animation: pulse-soft 2.5s ease-in-out infinite;
+  will-change: transform, opacity;
 }
 
 /* Print Styles */
