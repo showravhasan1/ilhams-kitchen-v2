@@ -26,7 +26,7 @@ async function ThankYouContent({ searchParams }: { searchParams: { id?: string }
             {/* Header */}
             <div className="mb-8 flex flex-col items-center gap-3">
                 <Image
-                    src="/brand-logo.jpeg"
+                    src="/brand-logo.webp"
                     alt="ILHAM's Kitchen"
                     width={56}
                     height={56}

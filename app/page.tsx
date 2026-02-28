@@ -152,7 +152,7 @@ export default function Home() {
                 <div className="max-w-5xl mx-auto px-4 py-2.5 flex justify-center md:justify-between items-center">
                     <div className="flex items-center gap-2.5">
                         <Image
-                            src="/brand-logo.jpeg"
+                            src="/brand-logo.webp"
                             alt="ILHAM's Kitchen Logo"
                             width={44}
                             height={44}
@@ -175,11 +175,13 @@ export default function Home() {
                 {/* Background Image */}
                 <div className="absolute inset-0 z-0">
                     <Image
-                        src="/images/WhatsApp Image 2026-02-22 at 02.20.40.jpeg"
+                        src="/images/hero.webp"
                         alt="Premium Peyaj Beresta"
                         fill
                         className="object-cover"
                         priority
+                        sizes="100vw"
+                        quality={80}
                     />
                     <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-black/80"></div>
                 </div>
@@ -188,7 +190,7 @@ export default function Home() {
                     {/* Logo Watermark */}
                     <div className="flex justify-center mb-6">
                         <Image
-                            src="/brand-logo.jpeg"
+                            src="/brand-logo.webp"
                             alt="ILHAM's Kitchen"
                             width={80}
                             height={80}
@@ -272,7 +274,7 @@ export default function Home() {
                     </div>
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
                         <div className="relative">
-                            <Image src="/images/WhatsApp Image 2026-02-22 at 02.20.40.jpeg" alt="প্রিমিয়াম পেয়াজ বেরেস্তা" width={300} height={300} className="rounded-2xl shadow-md w-full h-40 sm:h-48 object-cover hover:scale-[1.03] transition duration-300 border border-orange-100" />
+                            <Image src="/images/WhatsApp Image 2026-02-22 at 02.20.40.webp" alt="প্রিমিয়াম পেয়াজ বেরেস্তা" width={300} height={300} loading="lazy" className="rounded-2xl shadow-md w-full h-40 sm:h-48 object-cover hover:scale-[1.03] transition duration-300 border border-orange-100" />
                             <div className="absolute top-2 right-2 bg-white/95 backdrop-blur-sm px-2.5 py-1.5 rounded-xl shadow-lg flex items-center gap-1.5 z-10">
                                 <div className="bg-green-100 p-1 rounded-full"><CheckCircle2 size={14} className="text-green-600" /></div>
                                 <div className="leading-none">
@@ -281,9 +283,9 @@ export default function Home() {
                                 </div>
                             </div>
                         </div>
-                        <Image src="/images/WhatsApp Image 2026-02-22 at 02.21.11.jpeg" alt="গোল্ডেন ফ্রাইড বেরেস্তা" width={300} height={300} className="rounded-2xl shadow-md w-full h-40 sm:h-48 object-cover hover:scale-[1.03] transition duration-300 border border-orange-100" />
-                        <Image src="/images/WhatsApp Image 2026-02-22 at 02.21.35.jpeg" alt="ক্রিসপি বেরেস্তা ক্লোজআপ" width={300} height={300} className="rounded-2xl shadow-md w-full h-40 sm:h-48 object-cover hover:scale-[1.03] transition duration-300 border border-orange-100" />
-                        <Image src="/images/h.jpeg" alt="প্যাকেজড বেরেস্তা" width={300} height={300} className="rounded-2xl shadow-md w-full h-40 sm:h-48 object-cover bg-white hover:scale-[1.03] transition duration-300 border border-orange-100" />
+                        <Image src="/images/WhatsApp Image 2026-02-22 at 02.21.11.webp" alt="গোল্ডেন ফ্রাইড বেরেস্তা" width={300} height={300} loading="lazy" className="rounded-2xl shadow-md w-full h-40 sm:h-48 object-cover hover:scale-[1.03] transition duration-300 border border-orange-100" />
+                        <Image src="/images/WhatsApp Image 2026-02-22 at 02.21.35.webp" alt="ক্রিসপি বেরেস্তা ক্লোজআপ" width={300} height={300} loading="lazy" className="rounded-2xl shadow-md w-full h-40 sm:h-48 object-cover hover:scale-[1.03] transition duration-300 border border-orange-100" />
+                        <Image src="/images/h.webp" alt="প্যাকেজড বেরেস্তা" width={300} height={300} loading="lazy" className="rounded-2xl shadow-md w-full h-40 sm:h-48 object-cover bg-white hover:scale-[1.03] transition duration-300 border border-orange-100" />
                     </div>
                 </div>
             </section>
@@ -567,7 +569,7 @@ export default function Home() {
                     <div>
                         <div className="flex items-center justify-center md:justify-start gap-3 mb-4">
                             <Image
-                                src="/brand-logo.jpeg"
+                                src="/brand-logo.webp"
                                 alt="ILHAM's Kitchen"
                                 width={40}
                                 height={40}
