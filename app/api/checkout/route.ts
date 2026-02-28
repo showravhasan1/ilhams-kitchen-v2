@@ -63,38 +63,9 @@ export async function POST(req: Request) {
             }
         });
 
-        // ── 4. Send Facebook CAPI Purchase Event (non-blocking) ──
-        const clientIp = req.headers.get('x-forwarded-for')?.split(',')[0]?.trim()
-            || req.headers.get('x-real-ip')
-            || '';
-        const userAgent = req.headers.get('user-agent') || '';
-        const nameParts = (data.name || '').trim().split(' ');
-        const firstName = nameParts[0] || '';
-        const lastName = nameParts.length > 1 ? nameParts[nameParts.length - 1] : '';
-
-        sendFBEvent({
-            eventName: 'Purchase',
-            eventId,
-            sourceUrl: 'https://www.ilhamskitchen.com/',
-            userData: {
-                phone,
-                firstName,
-                lastName,
-                clientIp,
-                userAgent,
-                fbc: data.fbc || '',
-                fbp: data.fbp || '',
-                externalId: phone, // Use phone as external_id for cross-device matching
-            },
-            customData: {
-                currency: 'BDT',
-                value: data.total,
-                content_name: data.item,
-                content_type: 'product',
-                num_items: data.quantity,
-                order_id: order.id,
-            },
-        }).catch(err => console.error('[FB CAPI] Background error:', err));
+        // The Facebook CAPI Purchase Event is now deferred to the Admin Dashboard.
+        // It will only fire when the admin manually changes the order status to "Confirmed"
+        // to prevent fake orders/fraud from inflating Facebook's ad metrics.
 
         return NextResponse.json({ success: true, order, eventId });
     } catch (error: any) {
