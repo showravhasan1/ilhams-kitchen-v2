@@ -1,18 +1,9 @@
 import Image from 'next/image';
-import dynamic from 'next/dynamic';
 import {
     CheckCircle2, Truck, Star, Phone, ShoppingCart, Award, ShieldCheck,
     HeartPulse, Leaf, Flame, Users, Timer, Sparkles, UtensilsCrossed, Heart
 } from 'lucide-react';
-
-const InteractiveSection = dynamic(() => import('./components/InteractiveSection'), {
-    ssr: false,
-    loading: () => (
-        <div className="py-12 px-4 max-w-5xl mx-auto text-center">
-            <div className="animate-pulse bg-gray-200 h-96 rounded-3xl"></div>
-        </div>
-    ),
-});
+import LazyInteractive from './components/LazyInteractive';
 
 /* ─── Bangla Numeral Converter ─── */
 const banglaDigits = ['০', '১', '২', '৩', '৪', '৫', '৬', '৭', '৮', '৯'];
@@ -262,7 +253,7 @@ export default function Home() {
             </section>
 
             {/* ━━━ Interactive Section (Client Component) ━━━ */}
-            <InteractiveSection />
+            <LazyInteractive />
 
             {/* ━━━ Footer ━━━ */}
             <footer className="bg-gray-900 text-white pt-12 pb-28 md:pb-12 px-4 relative z-10">
