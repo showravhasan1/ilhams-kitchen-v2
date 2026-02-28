@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Hind_Siliguri } from "next/font/google";
-import Script from "next/script";
+import { Suspense } from "react";
+import { FacebookPixel } from "./components/FacebookPixel";
 import "./globals.css";
 
 const hindSiliguri = Hind_Siliguri({
@@ -19,8 +20,8 @@ export const metadata: Metadata = {
         locale: 'bn_BD',
         url: 'https://www.ilhamskitchen.com',
         siteName: "ILHAM's Kitchen",
-        title: "ILHAM's Kitchen | প্রিমিয়াম পেঁয়াজ বেরেস্তা",
-        description: "১০০% খাঁটি মচমচে পেঁয়াজ বেরেস্তা। ক্যাশ অন ডেলিভারি। অর্ডার করুন!",
+        title: "ILHAM's Kitchen - হোমমেড স্পেশাল মিক্সড ড্রাই ফ্রুটস আর বাদাম ভাজা",
+        description: "ঘি তে ভাজা কাজু, পেস্তা, কাঠবাদাম এবং প্রিমিয়াম কোয়ালিটির ড্রাই ফ্রুটস। ১০০% ন্যাচারাল এবং স্বাস্থ্যসম্মত।",
         images: [
             {
                 url: '/og-cover.png',
@@ -40,6 +41,15 @@ export const metadata: Metadata = {
         index: true,
         follow: true,
     },
+    icons: {
+        icon: [
+            { url: "/favicon.ico" },
+            { url: "/images/logo.png", type: "image/png" }
+        ],
+        apple: [
+            { url: "/images/logo.png" }
+        ]
+    }
 };
 
 export default function RootLayout({
@@ -56,25 +66,11 @@ export default function RootLayout({
             <body className={`${hindSiliguri.className} antialiased bg-gray-50 text-gray-900`} suppressHydrationWarning>
                 {children}
 
-                {/* Meta Pixel - beforeInteractive loads in document head */}
-                <Script
-                    id="fb-pixel-init"
-                    strategy="beforeInteractive"
-                    dangerouslySetInnerHTML={{
-                        __html: `
-                            !function(f,b,e,v,n,t,s)
-                            {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-                            n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-                            if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-                            n.queue=[];t=b.createElement(e);t.async=!0;
-                            t.src=v;s=b.getElementsByTagName(e)[0];
-                            s.parentNode.insertBefore(t,s)}(window, document,'script',
-                            'https://connect.facebook.net/en_US/fbevents.js');
-                            fbq('init', '2700364103657577');
-                            fbq('track', 'PageView');
-                        `,
-                    }}
-                />
+                {/* Meta Pixel - client-side router aware */}
+                <Suspense fallback={null}>
+                    <FacebookPixel />
+                </Suspense>
+
                 <noscript>
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
@@ -89,4 +85,3 @@ export default function RootLayout({
         </html>
     );
 }
-
