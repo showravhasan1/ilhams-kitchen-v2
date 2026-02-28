@@ -77,6 +77,8 @@ export async function sendFBEvent(event: EventData) {
     userData.country = [sha256Hash('bd')];
 
     const payload = {
+        // TEMPORARY: User provided test_event_code to see instant feedback on their dashboard
+        test_event_code: 'TEST83949',
         data: [
             {
                 event_name: event.eventName,
