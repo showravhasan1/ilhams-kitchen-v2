@@ -3,6 +3,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import prisma from '@/lib/prisma';
 import { CheckCircle2, ChevronRight, MessageCircle, Package, Truck, ShieldCheck, Phone } from 'lucide-react';
+import { ThankYouClientPixel } from './ThankYouClientPixel';
 
 /* ─── Bangla Numeral Converter ─── */
 const banglaDigits = ['০', '১', '২', '৩', '৪', '৫', '৬', '৭', '৮', '৯'];
@@ -10,9 +11,11 @@ const toBangla = (num: number | string): string => {
     return String(num).replace(/[0-9]/g, (d) => banglaDigits[parseInt(d)]);
 };
 
-async function ThankYouContent({ searchParams }: { searchParams: Promise<{ id?: string }> }) {
+async function ThankYouContent({ searchParams }: { searchParams: Promise<{ id?: string, eventId?: string, value?: string }> }) {
     const params = await searchParams;
     const orderId = params?.id;
+    const eventId = params?.eventId;
+    const value = params?.value;
     let order = null;
 
     if (orderId) {
@@ -23,6 +26,7 @@ async function ThankYouContent({ searchParams }: { searchParams: Promise<{ id?: 
 
     return (
         <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white flex flex-col items-center py-10 px-4">
+            {eventId && <ThankYouClientPixel eventId={eventId} value={Number(value || 0)} />}
 
             {/* Header */}
             <div className="mb-8 flex flex-col items-center gap-3">

@@ -104,15 +104,10 @@ export default function InteractiveSection() {
             });
             const data = await res.json();
             if (res.ok && data.success) {
-                // Browser-side Purchase with same eventID for deduplication
-                if (typeof window !== 'undefined' && (window as any).fbq) {
-                    (window as any).fbq('track', 'Purchase', {
-                        currency: 'BDT',
-                        value: total,
-                    }, { eventID: data.eventId });
-                }
+                // We will handle the browser-side Purchase event on the Thank You page
+                // to prevent Next.js from cancelling the network request during route transition.
                 if (data.order) {
-                    router.push(`/thank-you?id=${data.order.id}`);
+                    router.push(`/thank-you?id=${data.order.id}&eventId=${data.eventId}&value=${total}`);
                 } else {
                     router.push('/thank-you');
                 }
