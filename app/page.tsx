@@ -174,14 +174,12 @@ export default function Home() {
             <section className="relative overflow-hidden">
                 {/* Background Image */}
                 <div className="absolute inset-0 z-0">
-                    <Image
+                    <img
                         src="/images/hero.webp"
                         alt="Premium Peyaj Beresta"
-                        fill
-                        className="object-cover"
-                        priority
-                        sizes="100vw"
-                        quality={60}
+                        fetchPriority="high"
+                        decoding="async"
+                        className="absolute inset-0 w-full h-full object-cover"
                     />
                     <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-black/80"></div>
                 </div>
